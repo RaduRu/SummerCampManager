@@ -4,10 +4,10 @@ public class Activity {
     private String date;
     private String time;
     private String description;
-    private String id;
+    private int id;// rendiamolo impossibile da modificare //
     private TypeOfActivity type;
 
-    public Activity(String date, String time, String description, String id, TypeOfActivity type) {
+    public Activity(String date, String time, String description, int id, TypeOfActivity type) {
         this.date = date;
         this.time = time;
         this.description = description;
@@ -27,7 +27,7 @@ public class Activity {
         return description;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
@@ -47,7 +47,7 @@ public class Activity {
         this.description = description;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
