@@ -3,11 +3,13 @@ package DomainModel;
 import java.util.ArrayList;
 
 public class Educator {
+    private String email;
     private String name;
     private String surname;
     private ArrayList<Workshift> workshifts;
 
-    private Educator(String name, String surname){
+    public  Educator(String email, String name, String surname){
+        this.email=email;
         this.name= name;
         this.surname=surname;
     }
@@ -28,14 +30,6 @@ public class Educator {
         this.workshifts = workshifts;
     }
 
-    public void addWorkshift(Workshift workshift) {
-        this.workshifts.add(workshift);
-    }
-
-    public void removeWorkshift(Workshift workshift) {
-        this.workshifts.remove(workshift);
-    }
-
     public void setName(String name) {
         this.name = name;
     }
@@ -44,6 +38,11 @@ public class Educator {
         this.surname=surname;
     }
 
+    public String getEmail() {
+        return email;
+    }
 
-
+    public void setEmail(String email) {
+        this.email = email;
+    }
 }
