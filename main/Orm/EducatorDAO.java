@@ -56,4 +56,24 @@ public class EducatorDAO {
         return educators;
     }
 
+    public Educator getEducatorbyemail(String email) throws SQLException {
+        Connection con = ConnectionManager.getConnection();
+
+        String sql = "SELECT * FROM educators WHERE email = ?";
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setString(1, email);
+        ResultSet rs = ps.executeQuery();
+
+        Educator educator = null;
+
+        while(rs.next()) {
+              String name = rs.getString("name");
+              String surname = rs.getString("surname");
+              educator = new Educator(email, name, surname);
+        }
+
+        ps.close();
+        return educator;
+    }
+
 }

@@ -55,4 +55,11 @@ public abstract class Media {
     public void setUploader(Educator uploader) {
         this.uploader = uploader;
     }
+
+    /* codice di visualizzazione:
+    File outputFile = tempFolder.newFile("outputFile.jpg");
+try (FileOutputStream outputStream = new FileOutputStream(outputFile)) {
+    outputStream.write(dataForWriting);
+}
+     */
 }
