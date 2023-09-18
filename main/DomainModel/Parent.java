@@ -1,17 +1,22 @@
 package DomainModel;
 
+import java.util.ArrayList;
+
 public class Parent {
 
     private String idcode;
+    private String email;
     private String name;
     private String surname;
-    private String phonenumber;
+    private String cellphone ;
+    private ArrayList<Child> children;
 
-    private Parent(String idcode, String name, String surname, String phonenumber){
+    public Parent(String idcode, String email, String name, String surname, String cellphone){
         this.idcode=idcode;
+        this.email=email;
         this.name= name;
         this.surname=surname;
-        this.phonenumber=phonenumber;
+        this.cellphone=cellphone;
     }
 
     public String getIdcode() {
@@ -38,11 +43,27 @@ public class Parent {
         this.surname = surname;
     }
 
-    public String getPhonenumber() {
-        return phonenumber;
+    public String getCellphone() {
+        return cellphone;
     }
 
-    public void setPhonenumber(String phonenumber) {
-        this.phonenumber = phonenumber;
+    public void setCellphone(String cellphone) {
+        this.cellphone = cellphone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public ArrayList<Child> getChildren() {
+        return children;
+    }
+
+    public void setChildren(ArrayList<Child> children) {
+        this.children = children;
     }
 }

@@ -8,7 +8,7 @@ public class Child {
     private int age;
     private String details;
 
-    private Child(String idcode, String name, String surname, int age, String details){
+    public Child(String idcode, String name, String surname, int age, String details){
         this.idcode=idcode;
         this.name= name;
         this.surname=surname;

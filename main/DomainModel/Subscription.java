@@ -6,10 +6,11 @@ public class Subscription {
     private FeeStrategy feeStrategy;
     private boolean isPaid;
 
-    public Subscription(int Weeksnum, Child child, FeeStrategy feeStrategy) {
+    public Subscription(int Weeksnum, Child child, FeeStrategy feeStrategy, boolean isPaid) {
         this.Weeksnum = Weeksnum;
         this.child = child;
         this.feeStrategy = feeStrategy;
+        this.isPaid = isPaid;
     }
 
     public double getFee(){
@@ -26,5 +27,21 @@ public class Subscription {
 
     public Child getChild() {
         return child;
+    }
+
+    public boolean isPaid() {
+        return isPaid;
+    }
+
+    public void setPaid(boolean paid) {
+        isPaid = paid;
+    }
+
+    public FeeStrategy getFeeStrategy() {
+        return feeStrategy;
+    }
+
+    public void setFeeStrategy(FeeStrategy feeStrategy) {
+        this.feeStrategy = feeStrategy;
     }
 }
