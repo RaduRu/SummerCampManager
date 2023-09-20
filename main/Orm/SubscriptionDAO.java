@@ -32,5 +32,22 @@ public class SubscriptionDAO {
         }
         return null;
     }
+
+    public void editSubscription(Subscription subscription) throws SQLException {
+        Connection con = ConnectionManager.getConnection();
+        String sql = "UPDATE children SET weeknum = ?, idstrategy = ?, feepaid = ? WHERE idcode = ?";
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setInt(1, subscription.getWeeksnum());
+        if(subscription.getFeeStrategy() instanceof SiblingFee) {
+            ps.setInt(2, 1);
+        }
+        else if(subscription.getFeeStrategy() instanceof OnlyChildFee) {
+            ps.setInt(2, 2);
+        }
+        ps.setBoolean(3, subscription.isPaid());
+        ps.setString(4, subscription.getChild().getIdcode());
+        ps.executeUpdate();
+        ps.close();
+    }
 }
 
