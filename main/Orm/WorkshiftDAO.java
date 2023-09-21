@@ -56,7 +56,7 @@ public class WorkshiftDAO {
     }
 
 
-    void insert (Educator educator, Workshift workshift) throws SQLException, ParseException {
+    public void insert (Educator educator, Workshift workshift) throws SQLException, ParseException {
         Connection con = ConnectionManager.getConnection();
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -73,7 +73,7 @@ public class WorkshiftDAO {
         ps.close();
     }
 
-    void modify (Educator educator, Workshift newworkshift, Workshift oldworkshift) throws SQLException, ParseException {
+    public void modify (Educator educator, Workshift newworkshift, Workshift oldworkshift) throws SQLException, ParseException {
         Connection con = ConnectionManager.getConnection();
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -94,6 +94,24 @@ public class WorkshiftDAO {
 
         ps.close();
     }
+
+    public ArrayList<String> getDates() throws SQLException{
+        Connection con = ConnectionManager.getConnection();
+        String sql = "SELECT DISTINCT date FROM workshifts";
+        PreparedStatement ps = con.prepareStatement(sql);
+        ResultSet rs = ps.executeQuery();
+
+        ArrayList <String> dates = new ArrayList<String>();
+
+        while (rs.next()) {
+            String date = rs.getDate("date").toString();
+            dates.add(date);
+        }
+
+        ps.close();
+        return dates;
+    }
+
 
 
 

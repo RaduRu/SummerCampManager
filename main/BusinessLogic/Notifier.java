@@ -92,9 +92,18 @@ public class Notifier{
         Message message = new MimeMessage(session);
         message.setFrom(new InternetAddress(emailAddress));
         message.setSubject(subject);
+        String htmlText = "";
+
         for (Educator educator : toBeNotified) {
             Address addressTo = new InternetAddress(educator.getEmail());
             message.addRecipient(Message.RecipientType.TO, addressTo);
+            htmlText = "<img src=\"cid:image\" alt=\"SummerCamp\" style=\"width: 300px; height: 100px; \">\r\n" + //
+                    "<h5 style=\"color: black; font-family: Arial,sans-serif\">" + "Hi" + educator.getName()+ ", " + messageToSend + "</h5>\r\n"  //
+                /* + "<div style=\"margin-top: 5em\">\r\n" + //
+                "  <p style=\"color: gray; font-family: Arial,sans-serif; font-size: 0.7em\">Contatti:</p>\r\n" + //
+                "  <p style=\"color: gray; font-family: Arial,sans-serif; font-size: 0.7em\">Telefono: 1234567890</p>\r\n" + //
+                "  <p style=\"color: gray; font-family: Arial,sans-serif; font-size: 0.7em\">Email: museoswe@gmail.com</p>\r\n" + //
+                "</div>"*/ ;
         }
         message.setSubject(subject);
 
@@ -102,13 +111,7 @@ public class Notifier{
 
         //first part of the message
         BodyPart messageBodyPart = new MimeBodyPart();
-        String htmlText = "<img src=\"cid:image\" alt=\"SummerCamp\" style=\"width: 300px; height: 100px; \">\r\n" + //
-                "<h5 style=\"color: black; font-family: Arial,sans-serif\">" + messageToSend + "</h5>\r\n"  //
-                /* + "<div style=\"margin-top: 5em\">\r\n" + //
-                "  <p style=\"color: gray; font-family: Arial,sans-serif; font-size: 0.7em\">Contatti:</p>\r\n" + //
-                "  <p style=\"color: gray; font-family: Arial,sans-serif; font-size: 0.7em\">Telefono: 1234567890</p>\r\n" + //
-                "  <p style=\"color: gray; font-family: Arial,sans-serif; font-size: 0.7em\">Email: museoswe@gmail.com</p>\r\n" + //
-                "</div>"*/ ;
+
         messageBodyPart.setContent(htmlText, "text/html");
         multipart.addBodyPart(messageBodyPart);
 
