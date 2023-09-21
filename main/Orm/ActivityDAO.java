@@ -42,7 +42,7 @@ public class ActivityDAO {
         return null; // o con eccezione?
     }
 
-    public ArrayList<Activity> getAll() throws SQLException {
+    public ArrayList<Activity> getAllActivities() throws SQLException {
         Connection con = ConnectionManager.getConnection();
 
         String sql = "SELECT * FROM activities";

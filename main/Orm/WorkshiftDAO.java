@@ -55,6 +55,26 @@ public class WorkshiftDAO {
         return workshifts;
     }
 
+    public ArrayList<Workshift> getAllIndividualWorkshift() throws SQLException {
+        Connection con = ConnectionManager.getConnection();
+
+        String sql = "SELECT * FROM workshifts_educator";
+        PreparedStatement ps = con.prepareStatement(sql);
+        ResultSet rs = ps.executeQuery();
+
+        ArrayList <Workshift> workshifts = new ArrayList<Workshift>();
+
+        while (rs.next()) {
+            String date = rs.getDate("date").toString();
+            String time = rs.getTime("time").toString();
+            Workshift workshift = new Workshift(date, time);
+            workshifts.add(workshift);
+        }
+
+        ps.close();
+        return workshifts;
+    }
+
 
     public void insert (Educator educator, Workshift workshift) throws SQLException, ParseException {
         Connection con = ConnectionManager.getConnection();

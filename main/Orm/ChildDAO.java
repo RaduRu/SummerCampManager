@@ -24,7 +24,7 @@ public class ChildDAO {
     return null;
     }
 
-    public ArrayList<Child> getAll() throws SQLException {
+    public ArrayList<Child> getAllChildren() throws SQLException {
         Connection con = ConnectionManager.getConnection();
         String sql = "SELECT idcode, name, surname, age, details  FROM children";
         PreparedStatement ps = con.prepareStatement(sql);
@@ -60,14 +60,15 @@ public class ChildDAO {
         return null;
     }
 
-    public ArrayList<Child> getChildrenbyParent(Parent parent) throws SQLException {
+    public ArrayList<Child> getChildrenbyParent(String parentID) throws SQLException {
         Connection con = ConnectionManager.getConnection();
-        String sql = "SELECT idcode, name, surname, age, details  FROM children WHERE parentid = ?";
+        String sql = "SELECT idcode, name, surname, age, details FROM children WHERE parentid = ?";
         PreparedStatement ps = con.prepareStatement(sql);
-        ps.setString(1, parent.getIdcode());
+        ps.setString(1, parentID);
         ResultSet rs = ps.executeQuery();
 
         ArrayList<Child> children = new ArrayList<Child>();
+        SubscriptionDAO subscriptiondao = new SubscriptionDAO();
         while (rs.next()) {
             String idcode = rs.getString("idcode");
             String name = rs.getString("name");
@@ -75,13 +76,14 @@ public class ChildDAO {
             int age = rs.getInt("age");
             String details = rs.getString("details");
             Child child = new Child(idcode, name, surname, age, details);
+            Subscription subscription = subscriptiondao.getChildInfo(idcode);
+            child.setSubscription(subscription);
             children.add(child);
         }
-        parent.setChildren(children);
         return children;
     }
 
-    public void insertChild(Child child, Subscription subscription, int parentid) throws SQLException {
+    public void insertChild(Child child, Subscription subscription, String parentid) throws SQLException {
         Connection con = ConnectionManager.getConnection();
         String sql = "INSERT INTO children (idcode, name, surname, age, details, parentid, weeknum, idstrategy, feepaid) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement ps = con.prepareStatement(sql);
@@ -90,7 +92,7 @@ public class ChildDAO {
         ps.setString(3, child.getSurname());
         ps.setInt(4, child.getAge());
         ps.setString(5, child.getDetails());
-        ps.setInt(6, parentid);
+        ps.setString(6, parentid);
         ps.setInt(7, subscription.getWeeksnum());
         if(subscription.getFeeStrategy() instanceof SiblingFee) {
             ps.setInt(8, 1);

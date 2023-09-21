@@ -8,9 +8,11 @@ public class Child {
     private int age;
     private String details;
 
+    private Subscription subscription;
+
     public Child(String idcode, String name, String surname, int age, String details){
         this.idcode=idcode;
-        this.name= name;
+        this.name=name;
         this.surname=surname;
         this.age=age;
         this.details=details;
@@ -54,6 +56,14 @@ public class Child {
 
     public void setDetails(String details) {
         this.details = details;
+    }
+
+    public void setSubscription(Subscription subscription) {
+        this.subscription = subscription;
+    }
+
+    public Subscription getSubscription() {
+        return subscription;
     }
 }
 
