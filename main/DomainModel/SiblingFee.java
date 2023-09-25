@@ -1,4 +1,4 @@
-package DomainModel;
+package main.DomainModel;
 
 public class SiblingFee implements FeeStrategy{
     final double DISCOUNT = 0.1;

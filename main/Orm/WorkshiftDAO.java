@@ -1,15 +1,12 @@
-package Orm;
+package main.Orm;
 import java.sql.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import DomainModel.Educator;
-import DomainModel.Workshift;
-
-
-import java.util.ArrayList;
+import main.DomainModel.Educator;
+import main.DomainModel.Workshift;
 
 public class WorkshiftDAO {
 

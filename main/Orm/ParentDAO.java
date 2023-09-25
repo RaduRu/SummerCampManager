@@ -1,14 +1,8 @@
-package Orm;
+package main.Orm;
 import java.sql.*;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-import DomainModel.Parent;
 
-import DomainModel.Activity;
-import DomainModel.TypeOfActivity;
+import main.DomainModel.Parent;
 
 public class ParentDAO {
 

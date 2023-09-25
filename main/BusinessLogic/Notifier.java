@@ -1,7 +1,7 @@
-package BusinessLogic;
+package main.BusinessLogic;
 
-import DomainModel.Educator;
-import DomainModel.Parent;
+import main.DomainModel.Educator;
+import main.DomainModel.Parent;
 
 import javax.activation.DataHandler;
 import javax.activation.FileDataSource;

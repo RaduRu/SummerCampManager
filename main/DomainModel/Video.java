@@ -1,4 +1,4 @@
-package DomainModel;
+package main.DomainModel;
 
 public class Video extends Media{
     public Video(byte[] file, String filename, String date, String time, Educator uploader) {

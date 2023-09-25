@@ -1,7 +1,7 @@
-package BusinessLogic;
+package main.BusinessLogic;
 
-import DomainModel.*;
-import Orm.*;
+import main.DomainModel.*;
+import main.Orm.*;
 
 import com.google.common.collect.Lists;
 

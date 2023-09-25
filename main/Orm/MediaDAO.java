@@ -1,7 +1,6 @@
-package Orm;
+package main.Orm;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.*;
 import java.text.ParseException;
@@ -11,7 +10,7 @@ import java.util.ArrayList;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
-import DomainModel.*;
+import main.DomainModel.*;
 //codice di upload:
 //File file = new File("myimage.gif");
 //FileInputStream fis = new FileInputStream(file);
@@ -35,12 +34,6 @@ while (rs.next()) {
 rs.close();
 ps.close();
      */
-
-
-
-
-
-import java.util.ArrayList;
 
 public class MediaDAO {
 

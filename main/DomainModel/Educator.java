@@ -1,4 +1,4 @@
-package DomainModel;
+package main.DomainModel;
 
 import java.util.ArrayList;
 

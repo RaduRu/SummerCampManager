@@ -1,14 +1,10 @@
-package Orm;
+package main.Orm;
 import java.sql.*;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-import DomainModel.Educator;
+
+import main.DomainModel.Educator;
 
 import java.sql.Connection;
-import java.util.ArrayList;
 
 public class EducatorDAO {
 

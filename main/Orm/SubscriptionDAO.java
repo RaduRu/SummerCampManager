@@ -1,6 +1,6 @@
-package Orm;
+package main.Orm;
 
-import DomainModel.*;
+import main.DomainModel.*;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

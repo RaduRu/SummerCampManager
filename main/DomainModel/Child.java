@@ -1,4 +1,4 @@
-package DomainModel;
+package main.DomainModel;
 
 public class Child {
 
