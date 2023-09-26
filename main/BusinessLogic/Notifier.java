@@ -51,12 +51,13 @@ public class Notifier{
         messageBodyPart.setHeader("Content-ID", "<image>");
         messageBodyPart.setFileName("LogoSummerCamp.png");
         multipart.addBodyPart(messageBodyPart);
+        //forse da mettere dentro il for per mandare una mail per ogni parent
 
         for (Parent parent : toBeNotified) {
             Address addressTo = new InternetAddress(parent.getEmail());
             message.setRecipient(Message.RecipientType.TO, addressTo);
             String htmlText = "<img src=\"cid:image\" alt=\"SummerCamp\" style=\"width: 300px; height: 100px; \">\r\n" + //
-                    "<h5 style=\"color: black; font-family: Arial,sans-serif\">" + "Hi" + parent.getName()+ ", " + messageToSend + "</h5>\r\n"  //
+                    "<h5 style=\"color: black; font-family: Arial,sans-serif\">" + "Hi " + parent.getName()+ ", " + messageToSend + "</h5>\r\n"  //
                 /* + "<div style=\"margin-top: 5em\">\r\n" + //
                 "  <p style=\"color: gray; font-family: Arial,sans-serif; font-size: 0.7em\">Contatti:</p>\r\n" + //
                 "  <p style=\"color: gray; font-family: Arial,sans-serif; font-size: 0.7em\">Telefono: 1234567890</p>\r\n" + //
@@ -93,7 +94,7 @@ public class Notifier{
             Address addressTo = new InternetAddress(educator.getEmail());
             message.addRecipient(Message.RecipientType.TO, addressTo);
             htmlText = "<img src=\"cid:image\" alt=\"SummerCamp\" style=\"width: 300px; height: 100px; \">\r\n" + //
-                    "<h5 style=\"color: black; font-family: Arial,sans-serif\">" + "Hi" + educator.getName()+ ", " + messageToSend + "</h5>\r\n"  //
+                    "<h5 style=\"color: black; font-family: Arial,sans-serif\">" + "Hi " + educator.getName()+ ", " + messageToSend + "</h5>\r\n"  //
                 /* + "<div style=\"margin-top: 5em\">\r\n" + //
                 "  <p style=\"color: gray; font-family: Arial,sans-serif; font-size: 0.7em\">Contatti:</p>\r\n" + //
                 "  <p style=\"color: gray; font-family: Arial,sans-serif; font-size: 0.7em\">Telefono: 1234567890</p>\r\n" + //
