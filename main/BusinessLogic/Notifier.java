@@ -17,7 +17,7 @@ public class Notifier{
     private static Notifier notifier;
 
     private final String emailAddress = "summercampswe@gmail.com";
-    private final String emailPassword = "Summercamp.";
+    private final String emailPassword = "qbxbrlmjimttqntw";
     private Notifier(){}
     public static synchronized Notifier getInstance(){
         if(notifier == null){
@@ -33,7 +33,7 @@ public class Notifier{
         properties.put("mail.smtp.port", "587"); //numero di porta richiesto da gmail
         properties.put("mail.smtp.starttls.enable", "true");
 
-        Session session = Session.getInstance(properties, new Authenticator() {
+        Session session = Session.getInstance(properties, new javax.mail.Authenticator() {
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {
                 return new PasswordAuthentication(emailAddress, emailPassword);
@@ -43,39 +43,32 @@ public class Notifier{
         Message message = new MimeMessage(session);
         message.setFrom(new InternetAddress(emailAddress));
         message.setSubject(subject);
-        String htmlText = "";
-        for (Parent parent : toBeNotified) {
-            Address addressTo = new InternetAddress(parent.getEmail());
-            message.addRecipient(Message.RecipientType.TO, addressTo);
-            htmlText = "<img src=\"cid:image\" alt=\"SummerCamp\" style=\"width: 300px; height: 100px; \">\r\n" + //
-                    "<h5 style=\"color: black; font-family: Arial,sans-serif\">" + "Hi" + parent.getName()+ ", " + messageToSend + "</h5>\r\n"  //
-                /* + "<div style=\"margin-top: 5em\">\r\n" + //
-                "  <p style=\"color: gray; font-family: Arial,sans-serif; font-size: 0.7em\">Contatti:</p>\r\n" + //
-                "  <p style=\"color: gray; font-family: Arial,sans-serif; font-size: 0.7em\">Telefono: 1234567890</p>\r\n" + //
-                "  <p style=\"color: gray; font-family: Arial,sans-serif; font-size: 0.7em\">Email: museoswe@gmail.com</p>\r\n" + //
-                "</div>"*/ ;
-        }
-        message.setSubject(subject);
 
         MimeMultipart multipart = new MimeMultipart("related");
-
-        //first part of the message
         BodyPart messageBodyPart = new MimeBodyPart();
-
-        messageBodyPart.setContent(htmlText, "text/html");
-        multipart.addBodyPart(messageBodyPart);
-
-        //second part of the message
-        messageBodyPart = new MimeBodyPart();
         FileDataSource fds = new FileDataSource("imgs/LogoSummerCamp.png");
         messageBodyPart.setDataHandler(new DataHandler(fds));
         messageBodyPart.setHeader("Content-ID", "<image>");
         messageBodyPart.setFileName("LogoSummerCamp.png");
         multipart.addBodyPart(messageBodyPart);
 
-        message.setContent(multipart);
-
-        Transport.send(message);
+        for (Parent parent : toBeNotified) {
+            Address addressTo = new InternetAddress(parent.getEmail());
+            message.setRecipient(Message.RecipientType.TO, addressTo);
+            String htmlText = "<img src=\"cid:image\" alt=\"SummerCamp\" style=\"width: 300px; height: 100px; \">\r\n" + //
+                    "<h5 style=\"color: black; font-family: Arial,sans-serif\">" + "Hi" + parent.getName()+ ", " + messageToSend + "</h5>\r\n"  //
+                /* + "<div style=\"margin-top: 5em\">\r\n" + //
+                "  <p style=\"color: gray; font-family: Arial,sans-serif; font-size: 0.7em\">Contatti:</p>\r\n" + //
+                "  <p style=\"color: gray; font-family: Arial,sans-serif; font-size: 0.7em\">Telefono: 1234567890</p>\r\n" + //
+                "  <p style=\"color: gray; font-family: Arial,sans-serif; font-size: 0.7em\">Email: museoswe@gmail.com</p>\r\n" + //
+                "</div>"*/ ;
+            messageBodyPart = new MimeBodyPart();
+            messageBodyPart.setContent(htmlText, "text/html");
+            multipart.addBodyPart(messageBodyPart);
+            message.setContent(multipart);
+            Transport.send(message);
+            multipart.removeBodyPart(messageBodyPart);
+        }
     }
     public void sendEmailEducator(ArrayList<Educator> toBeNotified, String subject, String messageToSend) throws MessagingException {
         Properties properties = new Properties();
