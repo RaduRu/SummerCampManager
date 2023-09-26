@@ -47,10 +47,6 @@ public class Activity {
         this.description = description;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public void setType(TypeOfActivity type) {
         this.type = type;
     }

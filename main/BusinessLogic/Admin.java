@@ -28,13 +28,13 @@ public class Admin {
 
         ParentDAO parentDAO = new ParentDAO();
         ArrayList<Parent> parents = new ArrayList<>();
-        parentDAO.getAllParents();
+        parents = parentDAO.getAllParents();
 
         notifier.sendEmailParent(parents, "New activity", "a new activity has been created. You can check it on the website.");
 
         EducatorDAO educatorDAO = new EducatorDAO();
         ArrayList<Educator> educators = new ArrayList<>();
-        educatorDAO.getAllEducators();
+        educators = educatorDAO.getAllEducators();
 
         notifier.sendEmailEducator(educators, "New activity", "a new activity has been created. You can check it on the website.");
 

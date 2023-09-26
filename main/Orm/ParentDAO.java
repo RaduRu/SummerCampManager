@@ -41,4 +41,25 @@ public class ParentDAO {
         return parents;
     }
 
+    public void addParent(Parent parent) throws SQLException {
+        Connection con = ConnectionManager.getConnection();
+        String sql = "INSERT INTO parents (idcode, email, name, surname, cellphone) VALUES (?, ?, ?, ?, ?)";
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setString(1, parent.getIdcode());
+        ps.setString(2, parent.getEmail());
+        ps.setString(3, parent.getName());
+        ps.setString(4, parent.getSurname());
+        ps.setString(5, parent.getCellphone());
+        ps.executeUpdate();
+        ps.close();
+    }
+
+    public void deleteParent(String idcode) throws SQLException {
+        Connection con = ConnectionManager.getConnection();
+        String sql = "DELETE FROM parents WHERE idcode = ?";
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setString(1, idcode);
+        ps.executeUpdate();
+    }
+
 }

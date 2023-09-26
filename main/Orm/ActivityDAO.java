@@ -110,4 +110,22 @@ public class ActivityDAO {
         ps.executeUpdate();
         ps.close();
     }
+
+    public Activity getActivitybyId(int Id) throws SQLException {
+        Connection con = ConnectionManager.getConnection();
+        String sql = "SELECT * FROM activities WHERE id_activities = ?";
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setInt(1, Id);
+        ResultSet rs = ps.executeQuery();
+        if (rs.next()) {
+            String date = rs.getDate("date").toString();
+            String time = rs.getTime("time").toString();
+            String description = rs.getString("description");
+            int id = rs.getInt("id_activities");
+            TypeOfActivity type = getTypeOfActivity(rs.getInt("typeofactivity"));
+            Activity activity = new Activity(date, time, description, id, type);
+            return activity;
+        }
+        return null;
+    }
 }

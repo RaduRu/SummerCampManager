@@ -72,4 +72,22 @@ public class EducatorDAO {
         return educator;
     }
 
+    public void addEducator(Educator educator) throws SQLException {
+        Connection con = ConnectionManager.getConnection();
+        String sql = "INSERT INTO educators (email, name, surname) VALUES (?, ?, ?)";
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setString(1, educator.getEmail());
+        ps.setString(2, educator.getName());
+        ps.setString(3, educator.getSurname());
+        ps.executeUpdate();
+    }
+
+    public void deleteEducator(String email) throws SQLException {
+        Connection con = ConnectionManager.getConnection();
+        String sql = "DELETE FROM educators WHERE email = ?";
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setString(1, email);
+        ps.executeUpdate();
+    }
+
 }
