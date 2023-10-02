@@ -24,12 +24,11 @@ public class AdminTest {
     @Test
     public void setActivity(){
         Admin admin = new Admin();
-        Activity activity = new Activity("2020-12-12", "12:00:00", "test", 1, TypeOfActivity.GAME);
+        Activity activity = new Activity("2020-12-12", "12:00:00", "test", TypeOfActivity.HOMEWORK);
         try {
             admin.setActivity(activity);
             ActivityDAO activityDAO = new ActivityDAO();
-            Activity a = activityDAO.getActivitybyId(activity.getId());
-            assertEquals( activity.getId(), a.getId());
+            Activity a = activityDAO.getActivitybyDateAndTime(activity.getDate(), activity.getTime());
             assertEquals( activity.getDate(), a.getDate());
             assertEquals( activity.getTime(), a.getTime());
             assertEquals( activity.getDescription(), a.getDescription());
@@ -40,10 +39,12 @@ public class AdminTest {
             try {
                 ActivityDAO activityDAO = new ActivityDAO();
                 activityDAO.delete(activity);
-            } catch (SQLException e) {
+            } catch (SQLException | ParseException e) {
                 e.printStackTrace();
             }
         }
     }
+
+
 
 }

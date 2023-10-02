@@ -13,8 +13,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-//testi email modificabili con dettagli in più
-
 public class Admin {
     private final Notifier notifier;
 
@@ -85,7 +83,7 @@ public class Admin {
         return activityDAO.getAllActivities();
     }
 
-    public void deleteActivity(Activity activity) throws SQLException, MessagingException {
+    public void deleteActivity(Activity activity) throws SQLException, MessagingException, ParseException {
         ActivityDAO activityDAO = new ActivityDAO();
         activityDAO.delete(activity);
 

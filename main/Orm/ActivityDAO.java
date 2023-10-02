@@ -54,9 +54,8 @@ public class ActivityDAO {
             String date = rs.getDate("date").toString();
             String time = rs.getTime("time").toString();
             String description = rs.getString("description");
-            int id = rs.getInt("id_activities");
             TypeOfActivity type = getTypeOfActivity(rs.getInt("typeofactivity"));
-            Activity activity = new Activity(date, time, description, id, type);
+            Activity activity = new Activity(date, time, description, type);
             activities.add(activity);
         }
         ps.close();
@@ -82,12 +81,17 @@ public class ActivityDAO {
 
     }
 
-    public void delete (Activity activity) throws SQLException {
+    public void delete (Activity activity) throws SQLException, ParseException {
         Connection con = ConnectionManager.getConnection();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 
-        String sql = "DELETE FROM activities WHERE id_activities = ?";
+        String sql = "DELETE FROM activities WHERE date = ? AND time = ?";
         PreparedStatement ps = con.prepareStatement(sql);
-        ps.setInt(1, activity.getId());
+        java.util.Date utilDate = format.parse(activity.getDate());
+        java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+        LocalTime localTime = LocalTime.parse(activity.getTime(), DateTimeFormatter.ofPattern("HH:mm:ss"));
+        ps.setDate(1, sqlDate);
+        ps.setTime(2, java.sql.Time.valueOf(localTime));
         ps.executeUpdate();
         ps.close();
     }
@@ -96,34 +100,40 @@ public class ActivityDAO {
         Connection con = ConnectionManager.getConnection();
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 
-        String sql = "UPDATE activities SET date = ?, time = ?, description = ?, typeofactivity = ? WHERE id_activities = ?";
+        String sql = "UPDATE activities SET description = ?, typeofactivity = ? WHERE date = ? AND time = ?";
         PreparedStatement ps = con.prepareStatement(sql);
 
         java.util.Date utilDate = format.parse(activity.getDate());
         java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
         LocalTime localTime = LocalTime.parse(activity.getTime(), DateTimeFormatter.ofPattern("HH:mm:ss"));
-        ps.setDate(1, sqlDate);
-        ps.setTime(2, java.sql.Time.valueOf(localTime));
-        ps.setString(3, activity.getDescription());
-        ps.setInt(4, getId(activity.getType()));
-        ps.setInt(5, activity.getId());
+        ps.setDate(3, sqlDate);
+        ps.setTime(4, java.sql.Time.valueOf(localTime));
+        ps.setString(1, activity.getDescription());
+        ps.setInt(2, getId(activity.getType()));
+
         ps.executeUpdate();
         ps.close();
     }
 
-    public Activity getActivitybyId(int Id) throws SQLException {
+    public Activity getActivitybyDateAndTime(String date, String time) throws SQLException, ParseException {
         Connection con = ConnectionManager.getConnection();
-        String sql = "SELECT * FROM activities WHERE id_activities = ?";
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+
+        String sql = "SELECT * FROM activities WHERE date = ? AND time = ?";
         PreparedStatement ps = con.prepareStatement(sql);
-        ps.setInt(1, Id);
+
+        java.util.Date utilDate = format.parse(date);
+        java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+        LocalTime localTime = LocalTime.parse(time, DateTimeFormatter.ofPattern("HH:mm:ss"));
+        ps.setDate(1, sqlDate);
+        ps.setTime(2, java.sql.Time.valueOf(localTime));
+
         ResultSet rs = ps.executeQuery();
+
         if (rs.next()) {
-            String date = rs.getDate("date").toString();
-            String time = rs.getTime("time").toString();
             String description = rs.getString("description");
-            int id = rs.getInt("id_activities");
             TypeOfActivity type = getTypeOfActivity(rs.getInt("typeofactivity"));
-            Activity activity = new Activity(date, time, description, id, type);
+            Activity activity = new Activity(date, time, description, type);
             return activity;
         }
         return null;

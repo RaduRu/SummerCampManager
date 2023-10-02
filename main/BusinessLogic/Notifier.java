@@ -45,29 +45,26 @@ public class Notifier{
         message.setSubject(subject);
 
         MimeMultipart multipart = new MimeMultipart("related");
-        BodyPart messageBodyPart = new MimeBodyPart();
-        FileDataSource fds = new FileDataSource("imgs/LogoSummerCamp.png");
-        messageBodyPart.setDataHandler(new DataHandler(fds));
-        messageBodyPart.setHeader("Content-ID", "<image>");
-        messageBodyPart.setFileName("LogoSummerCamp.png");
-        multipart.addBodyPart(messageBodyPart);
 
         for (Parent parent : toBeNotified) {
             Address addressTo = new InternetAddress(parent.getEmail());
             message.setRecipient(Message.RecipientType.TO, addressTo);
-            String htmlText = "<img src=\"cid:image\" alt=\"SummerCamp\" style=\"width: 300px; height: 100px; \">\r\n" + //
-                    "<h5 style=\"color: black; font-family: Arial,sans-serif\">" + "Hi" + parent.getName()+ ", " + messageToSend + "</h5>\r\n"  //
-                /* + "<div style=\"margin-top: 5em\">\r\n" + //
-                "  <p style=\"color: gray; font-family: Arial,sans-serif; font-size: 0.7em\">Contatti:</p>\r\n" + //
-                "  <p style=\"color: gray; font-family: Arial,sans-serif; font-size: 0.7em\">Telefono: 1234567890</p>\r\n" + //
-                "  <p style=\"color: gray; font-family: Arial,sans-serif; font-size: 0.7em\">Email: museoswe@gmail.com</p>\r\n" + //
-                "</div>"*/ ;
-            messageBodyPart = new MimeBodyPart();
+            String htmlText = "<img src=\"cid:image\" alt=\"SummerCamp\" style=\"width: 150px; height: 150px; \">\r\n" + //
+                    "<h3 style=\"color: black; font-family: Arial,sans-serif\">" + "Hi " + parent.getName()+ ", " + messageToSend + "</h3>\r\n";
+            BodyPart messageBodyPart = new MimeBodyPart();
             messageBodyPart.setContent(htmlText, "text/html");
             multipart.addBodyPart(messageBodyPart);
+
+            BodyPart messageBodyPart1 = new MimeBodyPart();
+            FileDataSource fds = new FileDataSource("imgs/LogoSummerCamp.png");
+            messageBodyPart1.setDataHandler(new DataHandler(fds));
+            messageBodyPart1.setHeader("Content-ID", "<image>");
+            messageBodyPart1.setFileName("LogoSummerCamp.png");
+            multipart.addBodyPart(messageBodyPart1);
             message.setContent(multipart);
             Transport.send(message);
             multipart.removeBodyPart(messageBodyPart);
+            multipart.removeBodyPart(messageBodyPart1);
         }
     }
     public void sendEmailEducator(ArrayList<Educator> toBeNotified, String subject, String messageToSend) throws MessagingException {
@@ -87,40 +84,28 @@ public class Notifier{
         Message message = new MimeMessage(session);
         message.setFrom(new InternetAddress(emailAddress));
         message.setSubject(subject);
-        String htmlText = "";
+        MimeMultipart multipart = new MimeMultipart("related");
 
         for (Educator educator : toBeNotified) {
             Address addressTo = new InternetAddress(educator.getEmail());
-            message.addRecipient(Message.RecipientType.TO, addressTo);
-            htmlText = "<img src=\"cid:image\" alt=\"SummerCamp\" style=\"width: 300px; height: 100px; \">\r\n" + //
-                    "<h5 style=\"color: black; font-family: Arial,sans-serif\">" + "Hi" + educator.getName()+ ", " + messageToSend + "</h5>\r\n"  //
-                /* + "<div style=\"margin-top: 5em\">\r\n" + //
-                "  <p style=\"color: gray; font-family: Arial,sans-serif; font-size: 0.7em\">Contatti:</p>\r\n" + //
-                "  <p style=\"color: gray; font-family: Arial,sans-serif; font-size: 0.7em\">Telefono: 1234567890</p>\r\n" + //
-                "  <p style=\"color: gray; font-family: Arial,sans-serif; font-size: 0.7em\">Email: museoswe@gmail.com</p>\r\n" + //
-                "</div>"*/ ;
+            message.setRecipient(Message.RecipientType.TO, addressTo);
+            String htmlText = "<img src=\"cid:image\" alt=\"SummerCamp\" style=\"width: 150px; height: 150px; \">\r\n" + //
+                    "<h3 style=\"color: black; font-family: Arial,sans-serif\">" + "Hi " + educator.getName()+ ", " + messageToSend + "</h3>\r\n";
+            BodyPart messageBodyPart = new MimeBodyPart();
+            messageBodyPart.setContent(htmlText, "text/html");
+            multipart.addBodyPart(messageBodyPart);
+
+            BodyPart messageBodyPart1 = new MimeBodyPart();
+            FileDataSource fds = new FileDataSource("imgs/LogoSummerCamp.png");
+            messageBodyPart1.setDataHandler(new DataHandler(fds));
+            messageBodyPart1.setHeader("Content-ID", "<image>");
+            messageBodyPart1.setFileName("LogoSummerCamp.png");
+            multipart.addBodyPart(messageBodyPart1);
+            message.setContent(multipart);
+            Transport.send(message);
+            multipart.removeBodyPart(messageBodyPart);
+            multipart.removeBodyPart(messageBodyPart1);
         }
-        message.setSubject(subject);
-
-        MimeMultipart multipart = new MimeMultipart("related");
-
-        //first part of the message
-        BodyPart messageBodyPart = new MimeBodyPart();
-
-        messageBodyPart.setContent(htmlText, "text/html");
-        multipart.addBodyPart(messageBodyPart);
-
-        //second part of the message
-        messageBodyPart = new MimeBodyPart();
-        FileDataSource fds = new FileDataSource("imgs/LogoSummerCamp.png");
-        messageBodyPart.setDataHandler(new DataHandler(fds));
-        messageBodyPart.setHeader("Content-ID", "<image>");
-        messageBodyPart.setFileName("LogoSummerCamp.png");
-        multipart.addBodyPart(messageBodyPart);
-
-        message.setContent(multipart);
-
-        Transport.send(message);
     }
 
 }
