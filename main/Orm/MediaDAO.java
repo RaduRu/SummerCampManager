@@ -67,7 +67,7 @@ public class MediaDAO {
         File file = new File(filename);
         FileInputStream fis = new FileInputStream(file);
         Connection con = ConnectionManager.getConnection();
-        PreparedStatement ps = con.prepareStatement("INSERT INTO media VALUES (?, ?, ?, ?, ?, ?)");
+        PreparedStatement ps = con.prepareStatement("INSERT INTO media (mediabytes, filename, date, time, ed_email, type) VALUES (?, ?, ?, ?, ?, ?)");
         ps.setBinaryStream(1, fis, (int) file.length());
         ps.setString(2, file.getName());
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");

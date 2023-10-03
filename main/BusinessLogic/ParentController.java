@@ -28,7 +28,7 @@ public class ParentController {
         else
             feeStrategy = new SiblingFee();
         Subscription subscription = new Subscription(numWeeks, child, feeStrategy, false);
-        childDAO.insert(child, subscription, parentid);
+        childDAO.insertChild(child, subscription, parentid);
     }
 
     public void payFee(String idcode) throws SQLException, MessagingException, ClassNotFoundException {

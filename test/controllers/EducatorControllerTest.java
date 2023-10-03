@@ -2,7 +2,8 @@ package test.controllers;
 
 import main.BusinessLogic.Admin;
 import main.BusinessLogic.EducatorController;
-import main.DomainModel.*;
+import main.DomainModel.Educator;
+import main.DomainModel.Media;
 import main.Orm.*;
 import org.junit.Test;
 
@@ -28,18 +29,20 @@ public class EducatorControllerTest {
             educatorController.uploadPhotosAndVideos("imgs/FotoBimbiTest.png", educator, true);
             ArrayList<Media> media = new ArrayList<>();
             media = mediaDAO.getAllMedia();
-            assertEquals(media.get(media.size() - 1).getUploader(), educator);
+            assertEquals(media.get(media.size() - 1).getUploader().getEmail(), educator.getEmail());
         } catch (SQLException | ParseException | MessagingException | IOException | ClassNotFoundException e) {
             e.printStackTrace();
         } finally {
             try {
-                mediaDAO.deleteMedia("test");
+                mediaDAO.deleteMedia("FotoBimbiTest.png");
                 educatorDAO.deleteEducator(educator.getEmail());
             } catch (SQLException | ClassNotFoundException e) {
                 e.printStackTrace();
             }
         }
     }
+
+
 
 
 }
