@@ -11,7 +11,7 @@ import main.DomainModel.TypeOfActivity;
 
 public class ActivityDAO {
 
-    public int getId(TypeOfActivity type) throws SQLException {
+    public int getId(TypeOfActivity type) throws SQLException, ClassNotFoundException {
         Connection con = ConnectionManager.getConnection();
 
         String sql = "SELECT * FROM typeofactivity WHERE name = ?";
@@ -26,7 +26,7 @@ public class ActivityDAO {
         return -1; // o con eccezione?
     }
 
-    public TypeOfActivity getTypeOfActivity(int id) throws SQLException {
+    public TypeOfActivity getTypeOfActivity(int id) throws SQLException, ClassNotFoundException {
         Connection con = ConnectionManager.getConnection();
 
         String sql = "SELECT * FROM typeofactivity WHERE id = ?";
@@ -42,7 +42,7 @@ public class ActivityDAO {
         return null; // o con eccezione?
     }
 
-    public ArrayList<Activity> getAllActivities() throws SQLException {
+    public ArrayList<Activity> getAllActivities() throws SQLException, ClassNotFoundException {
         Connection con = ConnectionManager.getConnection();
 
         String sql = "SELECT * FROM activities";
@@ -62,7 +62,7 @@ public class ActivityDAO {
         return activities;
     }
 
-    public void insert (Activity activity) throws SQLException, ParseException {
+    public void insert (Activity activity) throws SQLException, ParseException, ClassNotFoundException {
         Connection con = ConnectionManager.getConnection();
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -81,7 +81,7 @@ public class ActivityDAO {
 
     }
 
-    public void delete (Activity activity) throws SQLException, ParseException {
+    public void delete (Activity activity) throws SQLException, ParseException, ClassNotFoundException {
         Connection con = ConnectionManager.getConnection();
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -96,7 +96,7 @@ public class ActivityDAO {
         ps.close();
     }
 
-    public void modify (Activity activity) throws SQLException, ParseException {
+    public void modify (Activity activity) throws SQLException, ParseException, ClassNotFoundException {
         Connection con = ConnectionManager.getConnection();
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -115,7 +115,7 @@ public class ActivityDAO {
         ps.close();
     }
 
-    public Activity getActivitybyDateAndTime(String date, String time) throws SQLException, ParseException {
+    public Activity getActivitybyDateAndTime(String date, String time) throws SQLException, ParseException, ClassNotFoundException {
         Connection con = ConnectionManager.getConnection();
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 

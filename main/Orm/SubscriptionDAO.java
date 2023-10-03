@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class SubscriptionDAO {
-    public Subscription getChildInfo(String idcode) throws SQLException {
+    public Subscription getChildInfo(String idcode) throws SQLException, ClassNotFoundException {
         Connection con = ConnectionManager.getConnection();
         String sql = "SELECT weeknum, idstrategy, feepaid  FROM children WHERE idcode = ?";
         PreparedStatement ps = con.prepareStatement(sql);
@@ -34,7 +34,7 @@ public class SubscriptionDAO {
         return null;
     }
 
-    public void editFeeStrategy(String idcode, FeeStrategy feeStrategy) throws SQLException {
+    public void editFeeStrategy(String idcode, FeeStrategy feeStrategy) throws SQLException, ClassNotFoundException {
         Connection con = ConnectionManager.getConnection();
         String sql = "UPDATE children SET idstrategy = ? WHERE idcode = ?";
         PreparedStatement ps = con.prepareStatement(sql);
@@ -49,7 +49,7 @@ public class SubscriptionDAO {
         ps.close();
     }
 
-    public void editFeePaid(String idcode, boolean feepaid) throws SQLException {
+    public void editFeePaid(String idcode, boolean feepaid) throws SQLException, ClassNotFoundException {
         Connection con = ConnectionManager.getConnection();
         String sql = "UPDATE children SET feepaid = ? WHERE idcode = ?";
         PreparedStatement ps = con.prepareStatement(sql);
@@ -59,7 +59,7 @@ public class SubscriptionDAO {
         ps.close();
     }
 
-    public ArrayList<Parent> getParentsNotPaid() throws SQLException {
+    public ArrayList<Parent> getParentsNotPaid() throws SQLException, ClassNotFoundException {
         Connection con = ConnectionManager.getConnection();
         String sql = "SELECT DISTINCT parents.idcode, parents.email, parents.name, parents.surname, parents.cellphone FROM parents, children WHERE parents.idcode = children.parentid AND children.feepaid = false";
         PreparedStatement ps = con.prepareStatement(sql);

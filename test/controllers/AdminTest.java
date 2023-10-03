@@ -33,7 +33,7 @@ public class AdminTest {
             assertEquals( activity.getTime(), a.getTime());
             assertEquals( activity.getDescription(), a.getDescription());
             assertEquals( activity.getType(), a.getType());
-        } catch (SQLException |ParseException | MessagingException e) {
+        } catch (SQLException | ParseException | MessagingException | ClassNotFoundException e) {
             e.printStackTrace();
         }finally{
             try {
@@ -41,6 +41,8 @@ public class AdminTest {
                 activityDAO.delete(activity);
             } catch (SQLException | ParseException e) {
                 e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                throw new RuntimeException(e);
             }
         }
     }

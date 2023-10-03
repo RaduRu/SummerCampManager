@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import main.DomainModel.*;
 
 public class ChildDAO {
-    public Parent getParent(String idcode) throws SQLException {
+    public Parent getParent(String idcode) throws SQLException, ClassNotFoundException {
         Connection con = ConnectionManager.getConnection();
         String sql = "SELECT parentid FROM children WHERE idcode = ?";
         PreparedStatement ps = con.prepareStatement(sql);
@@ -20,7 +20,7 @@ public class ChildDAO {
     return null;
     }
 
-    public ArrayList<Child> getAllChildren() throws SQLException {
+    public ArrayList<Child> getAllChildren() throws SQLException, ClassNotFoundException {
         Connection con = ConnectionManager.getConnection();
         String sql = "SELECT idcode, name, surname, age, details  FROM children";
         PreparedStatement ps = con.prepareStatement(sql);
@@ -39,7 +39,7 @@ public class ChildDAO {
         return children;
     }
 
-    public Child getChild(String idcode) throws SQLException {
+    public Child getChild(String idcode) throws SQLException, ClassNotFoundException {
         Connection con = ConnectionManager.getConnection();
         String sql = "SELECT idcode, name, surname, age, details  FROM children WHERE idcode = ?";
         PreparedStatement ps = con.prepareStatement(sql);
@@ -56,7 +56,7 @@ public class ChildDAO {
         return null;
     }
 
-    public ArrayList<Child> getChildrenbyParent(String parentID) throws SQLException {
+    public ArrayList<Child> getChildrenbyParent(String parentID) throws SQLException, ClassNotFoundException {
         Connection con = ConnectionManager.getConnection();
         String sql = "SELECT idcode, name, surname, age, details FROM children WHERE parentid = ?";
         PreparedStatement ps = con.prepareStatement(sql);
@@ -79,7 +79,7 @@ public class ChildDAO {
         return children;
     }
 
-    public void insertChild(Child child, Subscription subscription, String parentid) throws SQLException {
+    public void insertChild(Child child, Subscription subscription, String parentid) throws SQLException, ClassNotFoundException {
         Connection con = ConnectionManager.getConnection();
         String sql = "INSERT INTO children (idcode, name, surname, age, details, parentid, weeknum, idstrategy, feepaid) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement ps = con.prepareStatement(sql);

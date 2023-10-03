@@ -6,7 +6,7 @@ import main.DomainModel.Parent;
 
 public class ParentDAO {
 
-    public Parent getParent(String idcode) throws SQLException {
+    public Parent getParent(String idcode) throws SQLException, ClassNotFoundException {
         Connection con = ConnectionManager.getConnection();
         String sql = "SELECT * FROM parents WHERE idcode = ?";
         PreparedStatement ps = con.prepareStatement(sql);
@@ -23,7 +23,7 @@ public class ParentDAO {
         return null;
     }
 
-    public ArrayList<Parent> getAllParents() throws SQLException {
+    public ArrayList<Parent> getAllParents() throws SQLException, ClassNotFoundException {
         Connection con = ConnectionManager.getConnection();
         String sql = "SELECT * FROM parents";
         PreparedStatement ps = con.prepareStatement(sql);
@@ -41,7 +41,7 @@ public class ParentDAO {
         return parents;
     }
 
-    public void addParent(Parent parent) throws SQLException {
+    public void addParent(Parent parent) throws SQLException, ClassNotFoundException {
         Connection con = ConnectionManager.getConnection();
         String sql = "INSERT INTO parents (idcode, email, name, surname, cellphone) VALUES (?, ?, ?, ?, ?)";
         PreparedStatement ps = con.prepareStatement(sql);
@@ -54,7 +54,7 @@ public class ParentDAO {
         ps.close();
     }
 
-    public void deleteParent(String idcode) throws SQLException {
+    public void deleteParent(String idcode) throws SQLException, ClassNotFoundException {
         Connection con = ConnectionManager.getConnection();
         String sql = "DELETE FROM parents WHERE idcode = ?";
         PreparedStatement ps = con.prepareStatement(sql);

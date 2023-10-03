@@ -10,7 +10,7 @@ import main.DomainModel.Workshift;
 
 public class WorkshiftDAO {
 
-    public ArrayList<Workshift> getWorkshifts() throws SQLException {
+    public ArrayList<Workshift> getWorkshifts() throws SQLException, ClassNotFoundException {
          Connection con = ConnectionManager.getConnection();
 
          String sql = "SELECT * FROM workshifts";
@@ -31,7 +31,7 @@ public class WorkshiftDAO {
     }
 
 
-    public  ArrayList <Workshift> getIndividualWorkshift (Educator educator) throws SQLException {
+    public  ArrayList <Workshift> getIndividualWorkshift (Educator educator) throws SQLException, ClassNotFoundException {
         Connection con = ConnectionManager.getConnection();
 
         String sql = "SELECT * FROM workshifts_educator WHERE email = ?";
@@ -52,7 +52,7 @@ public class WorkshiftDAO {
         return workshifts;
     }
 
-    public ArrayList<Workshift> getAllIndividualWorkshift() throws SQLException {
+    public ArrayList<Workshift> getAllIndividualWorkshift() throws SQLException, ClassNotFoundException {
         Connection con = ConnectionManager.getConnection();
 
         String sql = "SELECT * FROM workshifts_educator";
@@ -73,7 +73,7 @@ public class WorkshiftDAO {
     }
 
 
-    public void insert (Educator educator, Workshift workshift) throws SQLException, ParseException {
+    public void insert (Educator educator, Workshift workshift) throws SQLException, ParseException, ClassNotFoundException {
         Connection con = ConnectionManager.getConnection();
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -90,7 +90,7 @@ public class WorkshiftDAO {
         ps.close();
     }
 
-    public void modify (Educator educator, Workshift newworkshift, Workshift oldworkshift) throws SQLException, ParseException {
+    public void modify (Educator educator, Workshift newworkshift, Workshift oldworkshift) throws SQLException, ParseException, ClassNotFoundException {
         Connection con = ConnectionManager.getConnection();
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -112,7 +112,7 @@ public class WorkshiftDAO {
         ps.close();
     }
 
-    public ArrayList<String> getDates() throws SQLException{
+    public ArrayList<String> getDates() throws SQLException, ClassNotFoundException {
         Connection con = ConnectionManager.getConnection();
         String sql = "SELECT DISTINCT date FROM workshifts";
         PreparedStatement ps = con.prepareStatement(sql);

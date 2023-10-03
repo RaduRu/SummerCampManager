@@ -20,7 +20,7 @@ public class Admin {
         notifier = Notifier.getInstance();
     }
 
-    public void setActivity(Activity activity) throws SQLException, ParseException, MessagingException {
+    public void setActivity(Activity activity) throws SQLException, ParseException, MessagingException, ClassNotFoundException {
         ActivityDAO activityDAO = new ActivityDAO();
         activityDAO.insert(activity);
 
@@ -38,7 +38,7 @@ public class Admin {
 
     }
 
-    public void createWorkshifts() throws SQLException, ParseException, MessagingException {
+    public void createWorkshifts() throws SQLException, ParseException, MessagingException, ClassNotFoundException {
         WorkshiftDAO workshiftDAO = new WorkshiftDAO();
         EducatorDAO educatorDAO = new EducatorDAO();
         ArrayList<Workshift> workshifts = workshiftDAO.getWorkshifts();
@@ -65,7 +65,7 @@ public class Admin {
         //se abbiamo tempo far vedere i workshift creati a tutti gli educatori
     }
 
-    public void modifyWorkshift(Educator educator, Workshift oldworkshift, Workshift newworkshift ) throws SQLException, ParseException, MessagingException {
+    public void modifyWorkshift(Educator educator, Workshift oldworkshift, Workshift newworkshift ) throws SQLException, ParseException, MessagingException, ClassNotFoundException {
         WorkshiftDAO workshiftDAO = new WorkshiftDAO();
         workshiftDAO.modify(educator, newworkshift, oldworkshift);
         ArrayList<Educator> educators = new ArrayList<>();
@@ -73,17 +73,17 @@ public class Admin {
         notifier.sendEmailEducator(educators, "Workshift modified", "your workshift for the Summer Camp has been modified. You can check it on the website.");
     }
 
-    public ArrayList<Workshift> viewWorkshifts() throws SQLException {
+    public ArrayList<Workshift> viewWorkshifts() throws SQLException, ClassNotFoundException {
         WorkshiftDAO workshiftDAO = new WorkshiftDAO();
         return workshiftDAO.getAllIndividualWorkshift();
     }
 
-    public ArrayList<Activity> viewActivities() throws SQLException {
+    public ArrayList<Activity> viewActivities() throws SQLException, ClassNotFoundException {
         ActivityDAO activityDAO = new ActivityDAO();
         return activityDAO.getAllActivities();
     }
 
-    public void deleteActivity(Activity activity) throws SQLException, MessagingException, ParseException {
+    public void deleteActivity(Activity activity) throws SQLException, MessagingException, ParseException, ClassNotFoundException {
         ActivityDAO activityDAO = new ActivityDAO();
         activityDAO.delete(activity);
 
@@ -98,7 +98,7 @@ public class Admin {
         notifier.sendEmailEducator(educators, "Activity deleted", "an activity has been deleted. You can check it on the website.");
     }
 
-    public void modifyActivity(Activity activity) throws SQLException, ParseException, MessagingException {
+    public void modifyActivity(Activity activity) throws SQLException, ParseException, MessagingException, ClassNotFoundException {
         ActivityDAO activityDAO = new ActivityDAO();
         activityDAO.modify(activity);
 
@@ -114,12 +114,12 @@ public class Admin {
 
     }
 
-    public ArrayList<Child> viewChildrenList() throws SQLException {
+    public ArrayList<Child> viewChildrenList() throws SQLException, ClassNotFoundException {
         ChildDAO childDAO = new ChildDAO();
         return childDAO.getAllChildren();
     }
 
-    public void paymentReminder() throws SQLException, MessagingException {
+    public void paymentReminder() throws SQLException, MessagingException, ClassNotFoundException {
         SubscriptionDAO subscriptionDAO = new SubscriptionDAO();
         ArrayList<Parent> parents = new ArrayList<>();
         parents = subscriptionDAO.getParentsNotPaid();

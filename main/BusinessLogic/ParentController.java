@@ -14,7 +14,7 @@ public class ParentController {
         notifier = Notifier.getInstance();
     }
 
-    public void registerChild(Child child, int numWeeks, String parentid) throws SQLException {
+    public void registerChild(Child child, int numWeeks, String parentid) throws SQLException, ClassNotFoundException {
         ChildDAO childDAO = new ChildDAO();
         ArrayList<Child> children = childDAO.getChildrenbyParent(parentid);
         FeeStrategy feeStrategy;
@@ -31,7 +31,7 @@ public class ParentController {
         childDAO.insertChild(child, subscription, parentid);
     }
 
-    public void payFee(String idcode) throws SQLException, MessagingException {
+    public void payFee(String idcode) throws SQLException, MessagingException, ClassNotFoundException {
         SubscriptionDAO subscriptionDAO = new SubscriptionDAO();
         subscriptionDAO.editFeePaid(idcode, true);
         Subscription subscription = subscriptionDAO.getChildInfo(idcode);
@@ -43,17 +43,17 @@ public class ParentController {
                 subscription.getChild().getSurname() + " has been paid successfully.");
     }
 
-    public ArrayList<Child> viewChildrenInfo(String parentid) throws SQLException {
+    public ArrayList<Child> viewChildrenInfo(String parentid) throws SQLException, ClassNotFoundException {
         ChildDAO childDAO = new ChildDAO();
         return childDAO.getChildrenbyParent(parentid);
     }
 
-    public ArrayList<Media> viewPhotosAndVideos() throws SQLException {
+    public ArrayList<Media> viewPhotosAndVideos() throws SQLException, ClassNotFoundException {
         MediaDAO mediaDAO = new MediaDAO();
         return mediaDAO.getAllMedia();
     }
 
-    public ArrayList<Activity> viewActivities() throws SQLException {
+    public ArrayList<Activity> viewActivities() throws SQLException, ClassNotFoundException {
         ActivityDAO activityDAO = new ActivityDAO();
         return activityDAO.getAllActivities();
     }
