@@ -7,7 +7,6 @@ public class Child {
     private String surname;
     private int age;
     private String details;
-
     private Subscription subscription;
 
     public Child(String idcode, String name, String surname, int age, String details){
