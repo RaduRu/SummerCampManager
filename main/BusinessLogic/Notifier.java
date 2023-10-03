@@ -26,7 +26,7 @@ public class Notifier{
         return notifier;
     }
 
-    public void sendEmailParent(ArrayList<Parent> toBeNotified, String subject, String messageToSend) throws MessagingException {
+    public void sendEmailParent(ArrayList<Parent> receivers, String subject, String tempMessage) throws MessagingException {
         Properties properties = new Properties();
         properties.put("mail.smtp.auth", "true");  //autenticazione user
         properties.put("mail.smtp.host", "smtp.gmail.com");  //server smtp gmail
@@ -46,11 +46,11 @@ public class Notifier{
 
         MimeMultipart multipart = new MimeMultipart("related");
 
-        for (Parent parent : toBeNotified) {
+        for (Parent parent : receivers) {
             Address addressTo = new InternetAddress(parent.getEmail());
             message.setRecipient(Message.RecipientType.TO, addressTo);
             String htmlText = "<img src=\"cid:image\" alt=\"SummerCamp\" style=\"width: 150px; height: 150px; \">\r\n" + //
-                    "<h3 style=\"color: black; font-family: Arial,sans-serif\">" + "Hi " + parent.getName()+ ", " + messageToSend + "</h3>\r\n";
+                    "<h3 style=\"color: black; font-family: Arial,sans-serif\">" + "Hi " + parent.getName()+ ", " + tempMessage + "</h3>\r\n";
             BodyPart messageBodyPart = new MimeBodyPart();
             messageBodyPart.setContent(htmlText, "text/html");
             multipart.addBodyPart(messageBodyPart);
@@ -67,7 +67,7 @@ public class Notifier{
             multipart.removeBodyPart(messageBodyPart1);
         }
     }
-    public void sendEmailEducator(ArrayList<Educator> toBeNotified, String subject, String messageToSend) throws MessagingException {
+    public void sendEmailEducator(ArrayList<Educator> receivers, String subject, String tempMessage) throws MessagingException {
         Properties properties = new Properties();
         properties.put("mail.smtp.auth", "true");  //autenticazione user
         properties.put("mail.smtp.host", "smtp.gmail.com");  //server smtp gmail
@@ -86,11 +86,11 @@ public class Notifier{
         message.setSubject(subject);
         MimeMultipart multipart = new MimeMultipart("related");
 
-        for (Educator educator : toBeNotified) {
+        for (Educator educator : receivers) {
             Address addressTo = new InternetAddress(educator.getEmail());
             message.setRecipient(Message.RecipientType.TO, addressTo);
             String htmlText = "<img src=\"cid:image\" alt=\"SummerCamp\" style=\"width: 150px; height: 150px; \">\r\n" + //
-                    "<h3 style=\"color: black; font-family: Arial,sans-serif\">" + "Hi " + educator.getName()+ ", " + messageToSend + "</h3>\r\n";
+                    "<h3 style=\"color: black; font-family: Arial,sans-serif\">" + "Hi " + educator.getName()+ ", " + tempMessage + "</h3>\r\n";
             BodyPart messageBodyPart = new MimeBodyPart();
             messageBodyPart.setContent(htmlText, "text/html");
             multipart.addBodyPart(messageBodyPart);
