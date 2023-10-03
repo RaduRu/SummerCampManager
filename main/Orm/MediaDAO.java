@@ -68,14 +68,14 @@ public class MediaDAO {
         FileInputStream fis = new FileInputStream(file);
         Connection con = ConnectionManager.getConnection();
         PreparedStatement ps = con.prepareStatement("INSERT INTO media VALUES (?, ?, ?, ?, ?, ?)");
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-
         ps.setBinaryStream(1, fis, (int) file.length());
         ps.setString(2, file.getName());
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         java.util.Date utilDate = format.parse(LocalDate.now().toString());
-        java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+        java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());//converting util.Date to sql.Date
         ps.setDate(3, sqlDate);
-        LocalTime localTime = LocalTime.parse(LocalTime.now().toString(), DateTimeFormatter.ofPattern("HH:mm:ss"));
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+        LocalTime localTime = LocalTime.parse(formatter.format(LocalTime.now()));
         ps.setTime(4, java.sql.Time.valueOf(localTime));
         ps.setString(5, ed_email);
         if(isPhoto)

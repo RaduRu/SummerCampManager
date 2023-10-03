@@ -29,14 +29,6 @@ public class Activity {
         return type;
     }
 
-    public void setDate(String date) {
-        this.date = date;
-    }
-
-    public void setTime(String time) {
-        this.time = time;
-    }
-
     public void setDescription(String description) {
         this.description = description;
     }

@@ -4,6 +4,9 @@ import main.DomainModel.*;
 import main.Orm.*;
 
 import javax.mail.MessagingException;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -26,10 +29,15 @@ public class EducatorController {
         notifier.sendEmailParent(parents, "New media", "a new media has been uploaded. You can check it on the website.");
     }
 
-    public ArrayList<Media> viewPhotosAndVideos() throws SQLException {
+    public ArrayList<Media> viewPhotosAndVideos() throws SQLException, IOException {
         MediaDAO mediaDAO = new MediaDAO();
         ArrayList<Media> media = new ArrayList<>();
         media = mediaDAO.getAllMedia();
+        for(Media m : media){
+            File file = new File("imgs/out/" + m.getFilename());
+            FileOutputStream fos = new FileOutputStream(file);
+            fos.write(m.getFile());
+        }
         return media;
     }
 
