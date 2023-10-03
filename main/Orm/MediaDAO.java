@@ -37,7 +37,7 @@ ps.close();
 
 public class MediaDAO {
 
-    public ArrayList<Media> getAllMedia() throws SQLException {
+    public ArrayList<Media> getAllMedia() throws SQLException, ClassNotFoundException {
         Connection con = ConnectionManager.getConnection();
 
         String sql = "SELECT * FROM media";
@@ -63,7 +63,7 @@ public class MediaDAO {
         return media;
     }
 
-    public void uploadMedia(String filename, String ed_email, boolean isPhoto) throws IOException, SQLException, ParseException {
+    public void uploadMedia(String filename, String ed_email, boolean isPhoto) throws IOException, SQLException, ParseException, ClassNotFoundException {
         File file = new File(filename);
         FileInputStream fis = new FileInputStream(file);
         Connection con = ConnectionManager.getConnection();
@@ -87,7 +87,7 @@ public class MediaDAO {
         fis.close();
     }
 
-    public void deleteMedia(String filename) throws SQLException{
+    public void deleteMedia(String filename) throws SQLException, ClassNotFoundException {
         Connection con = ConnectionManager.getConnection();
         String sql = "DELETE FROM media WHERE filename = ?";
         PreparedStatement ps = con.prepareStatement(sql);

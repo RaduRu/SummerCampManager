@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import main.DomainModel.*;
 
 public class ChildDAO {
-    public Parent getParent(String idcode) throws SQLException {
+    public Parent getParent(String idcode) throws SQLException, ClassNotFoundException {
         Connection con = ConnectionManager.getConnection();
         String sql = "SELECT parentid FROM children WHERE idcode = ?";
         PreparedStatement ps = con.prepareStatement(sql);
@@ -20,7 +20,7 @@ public class ChildDAO {
     return null;
     }
 
-    public ArrayList<Child> getAllChildren() throws SQLException {
+    public ArrayList<Child> getAllChildren() throws SQLException, ClassNotFoundException {
         Connection con = ConnectionManager.getConnection();
         String sql = "SELECT idcode, name, surname, age, details  FROM children";
         PreparedStatement ps = con.prepareStatement(sql);
@@ -79,33 +79,24 @@ public class ChildDAO {
         return children;
     }
 
-    public void insert(Child child, Subscription subscription, String parentid) throws SQLException {
+    public void insertChild(Child child, Subscription subscription, String parentid) throws SQLException {
         Connection con = ConnectionManager.getConnection();
-        String sql = "INSERT INTO children (name, surname, age, details, weeknum, idstrategy, idcode, parentid, feepaid) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        PreparedStatement ps = con.prepareStatement(sql);
-        ps.setString(7, child.getIdcode());
-        ps.setString(1, child.getName());
-        ps.setString(2, child.getSurname());
-        ps.setInt(3, child.getAge());
-        ps.setString(4, child.getDetails());
-        ps.setString(8, parentid);
-        ps.setInt(5, subscription.getWeeksnum());
-        if(subscription.getFeeStrategy() instanceof SiblingFee) {
-            ps.setInt(6, 1);
-        }
-        else if(subscription.getFeeStrategy() instanceof OnlyChildFee) {
-            ps.setInt(6, 2);
-        }
-        ps.setBoolean(9, false);
-        ps.executeUpdate();
-        ps.close();
-    }
-
-    public void delete(Child child) throws SQLException {
-        Connection con = ConnectionManager.getConnection();
-        String sql = "DELETE FROM children WHERE idcode = ?";
+        String sql = "INSERT INTO children (idcode, name, surname, age, details, parentid, weeknum, idstrategy, feepaid) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement ps = con.prepareStatement(sql);
         ps.setString(1, child.getIdcode());
+        ps.setString(2, child.getName());
+        ps.setString(3, child.getSurname());
+        ps.setInt(4, child.getAge());
+        ps.setString(5, child.getDetails());
+        ps.setString(6, parentid);
+        ps.setInt(7, subscription.getWeeksnum());
+        if(subscription.getFeeStrategy() instanceof SiblingFee) {
+            ps.setInt(8, 1);
+        }
+        else if(subscription.getFeeStrategy() instanceof OnlyChildFee) {
+            ps.setInt(8, 2);
+        }
+        ps.setBoolean(9, false);
         ps.executeUpdate();
         ps.close();
     }

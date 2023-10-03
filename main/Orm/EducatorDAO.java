@@ -8,7 +8,7 @@ import java.sql.Connection;
 
 public class EducatorDAO {
 
-    public ArrayList<Educator> getAllEducators() throws SQLException {
+    public ArrayList<Educator> getAllEducators() throws SQLException, ClassNotFoundException {
         Connection con = ConnectionManager.getConnection();
 
         String sql = "SELECT * FROM educators";
@@ -29,7 +29,7 @@ public class EducatorDAO {
         return educators;
     }
 
-    public ArrayList <Educator> getEducatorsShifts() throws SQLException {
+    public ArrayList <Educator> getEducatorsShifts() throws SQLException, ClassNotFoundException {
         Connection con = ConnectionManager.getConnection();
 
         String sql = "SELECT * FROM educators ";
@@ -52,7 +52,7 @@ public class EducatorDAO {
         return educators;
     }
 
-    public Educator getEducatorbyemail(String email) throws SQLException {
+    public Educator getEducatorbyemail(String email) throws SQLException, ClassNotFoundException {
         Connection con = ConnectionManager.getConnection();
 
         String sql = "SELECT * FROM educators WHERE email = ?";
@@ -72,7 +72,7 @@ public class EducatorDAO {
         return educator;
     }
 
-    public void addEducator(Educator educator) throws SQLException {
+    public void addEducator(Educator educator) throws SQLException, ClassNotFoundException {
         Connection con = ConnectionManager.getConnection();
         String sql = "INSERT INTO educators (email, name, surname) VALUES (?, ?, ?)";
         PreparedStatement ps = con.prepareStatement(sql);
@@ -82,7 +82,7 @@ public class EducatorDAO {
         ps.executeUpdate();
     }
 
-    public void deleteEducator(String email) throws SQLException {
+    public void deleteEducator(String email) throws SQLException, ClassNotFoundException {
         Connection con = ConnectionManager.getConnection();
         String sql = "DELETE FROM educators WHERE email = ?";
         PreparedStatement ps = con.prepareStatement(sql);
