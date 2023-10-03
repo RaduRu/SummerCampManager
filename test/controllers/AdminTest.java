@@ -58,12 +58,12 @@ public class AdminTest {
             assertEquals( activities.get(activities.size()-1).getTime(), activity.getTime());
             assertEquals( activities.get(activities.size()-1).getDescription(), activity.getDescription());
             assertEquals( activities.get(activities.size()-1).getType(), activity.getType());
-        } catch (SQLException | ParseException e) {
+        } catch (SQLException | ParseException | ClassNotFoundException e) {
             e.printStackTrace();
         } finally{
             try {
                 activityDAO.delete(activity);
-            } catch (SQLException | ParseException e) {
+            } catch (SQLException | ParseException | ClassNotFoundException e) {
                 e.printStackTrace();
             }
         }
@@ -78,7 +78,7 @@ public class AdminTest {
             activityDAO.insert(activity);
             admin.deleteActivity(activity);
             assertNull(activityDAO.getActivitybyDateAndTime(activity.getDate(), activity.getTime()));
-        } catch (SQLException | ParseException | MessagingException e) {
+        } catch (SQLException | ParseException | MessagingException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
@@ -97,12 +97,12 @@ public class AdminTest {
             assertEquals( newActivity.getTime(), a.getTime());
             assertEquals( newActivity.getDescription(), a.getDescription());
             assertEquals( newActivity.getType(), a.getType());
-        } catch (SQLException | ParseException | MessagingException e) {
+        } catch (SQLException | ParseException | MessagingException | ClassNotFoundException e) {
             e.printStackTrace();
         } finally{
             try {
                 activityDAO.delete(activity);
-            } catch (SQLException | ParseException e) {
+            } catch (SQLException | ParseException | ClassNotFoundException e) {
                 e.printStackTrace();
             }
         }
@@ -125,19 +125,19 @@ public class AdminTest {
         ArrayList<Child> children;
 
         try{
-            childDAO.insert(child, subscription, "abc123");
+            childDAO.insertChild(child, subscription, "abc123");
             children = admin.viewChildrenList();
             assertEquals( children.get(children.size()-1).getIdcode(), child.getIdcode());
             assertEquals( children.get(children.size()-1).getName(), child.getName());
             assertEquals( children.get(children.size()-1).getSurname(), child.getSurname());
             assertEquals( children.get(children.size()-1).getAge(), child.getAge());
             assertEquals( children.get(children.size()-1).getDetails(), child.getDetails());
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         } finally {
             try {
                 childDAO.delete(child);
-            } catch (SQLException e) {
+            } catch (SQLException |ClassNotFoundException e) {
                 e.printStackTrace();
             }
         }

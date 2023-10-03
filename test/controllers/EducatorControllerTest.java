@@ -29,13 +29,13 @@ public class EducatorControllerTest {
             ArrayList<Media> media = new ArrayList<>();
             media = mediaDAO.getAllMedia();
             assertEquals(media.get(media.size() - 1).getUploader(), educator);
-        } catch (SQLException | ParseException | MessagingException | IOException e) {
+        } catch (SQLException | ParseException | MessagingException | IOException | ClassNotFoundException e) {
             e.printStackTrace();
         } finally {
             try {
                 mediaDAO.deleteMedia("test");
                 educatorDAO.deleteEducator(educator.getEmail());
-            } catch (SQLException e) {
+            } catch (SQLException | ClassNotFoundException e) {
                 e.printStackTrace();
             }
         }
