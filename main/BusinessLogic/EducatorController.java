@@ -63,7 +63,10 @@ public class EducatorController {
 
     public Child viewChildInfo(String idcode) throws SQLException, ClassNotFoundException {
         ChildDAO childDAO = new ChildDAO();
-        return childDAO.getChild(idcode);
+        SubscriptionDAO subscriptionDAO = new SubscriptionDAO();
+        Child child = childDAO.getChild(idcode);
+        child.setSubscription(subscriptionDAO.getChildInfo(idcode));
+        return child;
     }
 
 

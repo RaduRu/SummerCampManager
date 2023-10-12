@@ -95,5 +95,31 @@ public class MediaDAO {
         ps.executeUpdate();
         ps.close();
     }
+
+    public Media getMediabyfilename(String filename) throws SQLException, ClassNotFoundException {
+        Connection con = ConnectionManager.getConnection();
+
+        String sql = "SELECT * FROM media WHERE filename = ?";
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setString(1, filename);
+        ResultSet rs = ps.executeQuery();
+
+        Media media = null;
+        EducatorDAO educatorDAO = new EducatorDAO();
+        while (rs.next()) {
+            String date = rs.getDate("date").toString();
+            String time = rs.getTime("time").toString();
+            byte[] file = rs.getBytes("mediabytes");
+            Educator uploader = educatorDAO.getEducatorbyemail(rs.getString("ed_email"));
+            if(rs.getInt("type") == 1){
+                Photo photo = new Photo(file, filename, date, time, uploader);
+                media = photo;}
+            else{
+                Video video = new Video(file, filename, date, time, uploader);
+                media = video;
+                }
+        }
+        return media;
+    }
 }
 
