@@ -4,6 +4,10 @@ import main.DomainModel.*;
 import main.Orm.*;
 
 import javax.mail.MessagingException;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -28,18 +32,19 @@ public class ParentController {
         else
             feeStrategy = new SiblingFee();
         Subscription subscription = new Subscription(numWeeks, child, feeStrategy, false);
+        child.setSubscription(subscription);
         childDAO.insertChild(child, subscription, parentid);
     }
 
-    public void payFee(String idcode) throws SQLException, MessagingException, ClassNotFoundException {
+    public void payFee(String idcodeChild, String idcodeParent) throws SQLException, MessagingException, ClassNotFoundException {
         SubscriptionDAO subscriptionDAO = new SubscriptionDAO();
-        subscriptionDAO.editFeePaid(idcode, true);
-        Subscription subscription = subscriptionDAO.getChildInfo(idcode);
+        subscriptionDAO.editFeePaid(idcodeChild, true);
+        Subscription subscription = subscriptionDAO.getChildInfo(idcodeChild);
 
         ParentDAO parentDAO = new ParentDAO();
         ArrayList<Parent> parents = new ArrayList<>();
-        parents.add(parentDAO.getParent(idcode));
-        notifier.sendEmailParent(parents, "Fee paid", "the fee of "+ subscription.getFee() + "€ for your child"+ subscription.getChild().getName()+
+        parents.add(parentDAO.getParent(idcodeParent));
+        notifier.sendEmailParent(parents, "Fee paid", "the fee of "+ subscription.getFee() + " euros for your child "+ subscription.getChild().getName()+ " " +
                 subscription.getChild().getSurname() + " has been paid successfully.");
     }
 
@@ -48,9 +53,16 @@ public class ParentController {
         return childDAO.getChildrenbyParent(parentid);
     }
 
-    public ArrayList<Media> viewPhotosAndVideos() throws SQLException, ClassNotFoundException {
+    public ArrayList<Media> viewPhotosAndVideos() throws SQLException, ClassNotFoundException, IOException {
         MediaDAO mediaDAO = new MediaDAO();
-        return mediaDAO.getAllMedia();
+        ArrayList<Media> media = new ArrayList<>();
+        media = mediaDAO.getAllMedia();
+        for(Media m : media){
+            File file = new File("imgs/out/" + m.getFilename());
+            FileOutputStream fos = new FileOutputStream(file);
+            fos.write(m.getFile());
+        }
+        return media;
     }
 
     public ArrayList<Activity> viewActivities() throws SQLException, ClassNotFoundException {
