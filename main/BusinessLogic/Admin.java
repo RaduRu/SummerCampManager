@@ -88,13 +88,11 @@ public class Admin {
         activityDAO.delete(activity);
 
         ParentDAO parentDAO = new ParentDAO();
-        ArrayList<Parent> parents = new ArrayList<>();
-        parentDAO.getAllParents();
+        ArrayList<Parent> parents = parentDAO.getAllParents();
         notifier.sendEmailParent(parents, "Activity deleted", "an activity has been deleted. You can check it on the website.");
 
         EducatorDAO educatorDAO = new EducatorDAO();
-        ArrayList<Educator> educators = new ArrayList<>();
-        educatorDAO.getAllEducators();
+        ArrayList<Educator> educators = educatorDAO.getAllEducators();
         notifier.sendEmailEducator(educators, "Activity deleted", "an activity has been deleted. You can check it on the website.");
     }
 
@@ -103,13 +101,11 @@ public class Admin {
         activityDAO.modify(activity);
 
         ParentDAO parentDAO = new ParentDAO();
-        ArrayList<Parent> parents = new ArrayList<>();
-        parentDAO.getAllParents();
+        ArrayList<Parent> parents = parentDAO.getAllParents();
         notifier.sendEmailParent(parents, "Activity modified", "an activity has been modified. You can check it on the website.");
 
         EducatorDAO educatorDAO = new EducatorDAO();
-        ArrayList<Educator> educators = new ArrayList<>();
-        educatorDAO.getAllEducators();
+        ArrayList<Educator> educators = educatorDAO.getAllEducators();
         notifier.sendEmailEducator(educators, "Activity modified", "an activity has been modified. You can check it on the website.");
 
     }
