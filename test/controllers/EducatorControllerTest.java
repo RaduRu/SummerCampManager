@@ -120,5 +120,58 @@ public class EducatorControllerTest {
         }
     }
 
+    @Test
+    public void viewChildrenList(){
+        Child child = new Child("ABC123", "Marina", "Carovani", 8, "test");
+        FeeStrategy feeStrategy = new OnlyChildFee();
+        Subscription subscription = new Subscription(1, child, feeStrategy, false);
+
+        ChildDAO childDAO = new ChildDAO();
+        Admin admin = new Admin();
+        ArrayList<Child> children;
+
+        try{
+            childDAO.insertChild(child, subscription, "abc123");
+            children = admin.viewChildrenList();
+            assertEquals( children.get(children.size()-1).getIdcode(), child.getIdcode());
+            assertEquals( children.get(children.size()-1).getName(), child.getName());
+            assertEquals( children.get(children.size()-1).getSurname(), child.getSurname());
+            assertEquals( children.get(children.size()-1).getAge(), child.getAge());
+            assertEquals( children.get(children.size()-1).getDetails(), child.getDetails());
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                childDAO.delete(child);
+            } catch (SQLException |ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    @Test
+    public void  viewActivities(){
+        Activity activity = new Activity("2020-12-12", "12:00:00", "test", TypeOfActivity.HOMEWORK);
+        ActivityDAO activityDAO = new ActivityDAO();
+        Admin admin = new Admin();
+        ArrayList<Activity> activities;
+        try{
+            activityDAO.insert(activity);
+            activities = admin.viewActivities();
+            assertEquals( activities.get(activities.size()-1).getDate(), activity.getDate());
+            assertEquals( activities.get(activities.size()-1).getTime(), activity.getTime());
+            assertEquals( activities.get(activities.size()-1).getDescription(), activity.getDescription());
+            assertEquals( activities.get(activities.size()-1).getType(), activity.getType());
+        } catch (SQLException | ParseException | ClassNotFoundException e) {
+            e.printStackTrace();
+        } finally{
+            try {
+                activityDAO.delete(activity);
+            } catch (SQLException | ParseException | ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
 
 }
