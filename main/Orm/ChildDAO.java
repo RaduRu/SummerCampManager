@@ -22,7 +22,7 @@ public class ChildDAO {
 
     public ArrayList<Child> getAllChildren() throws SQLException, ClassNotFoundException {
         Connection con = ConnectionManager.getConnection();
-        String sql = "SELECT idcode, name, surname, age, details  FROM children";
+        String sql = "SELECT idcode, name, surname, age, details, weeknum, idstrategy, feepaid FROM children";
         PreparedStatement ps = con.prepareStatement(sql);
         ResultSet rs = ps.executeQuery();
 
@@ -33,7 +33,18 @@ public class ChildDAO {
             String surname = rs.getString("surname");
             int age = rs.getInt("age");
             String details = rs.getString("details");
+            int weeknum = rs.getInt("weeknum");
+            boolean feepaid = rs.getBoolean("feepaid");
+            FeeStrategy feestrategy;
+            if(rs.getInt("idstrategy") == 1){
+                feestrategy = new SiblingFee();
+            }
+            else{
+                feestrategy = new OnlyChildFee();
+            }
+            Subscription subscription = new Subscription(weeknum, null, feestrategy, feepaid);
             Child child = new Child(idcode, name, surname, age, details);
+            child.setSubscription(subscription);
             children.add(child);
         }
         return children;
