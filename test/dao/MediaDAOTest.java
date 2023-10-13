@@ -39,28 +39,88 @@ public class MediaDAOTest {
     @Test
     public void getMediabyfilename(){
         MediaDAO mediaDAO = new MediaDAO();
-        EducatorDAO educator = new EducatorDAO();
-        byte[] num = new byte[10];
-        Educator educator1 = new Educator("gigi.gogi@edu.unifi.it", "Gigi", "Gogi");
-        Photo photo = new Photo(num, "test", "2020-12-12", "12:00:00", educator1);
+        EducatorDAO educatordao = new EducatorDAO();
+        String path = "imgs/FotoBimbiTest.png";
+        String filename = "FotoBimbiTest.png";
+        Educator educator = new Educator("gigi.gogi@edu.unifi.it", "Gigi", "Gogi");
         try {
-            mediaDAO.uploadMedia("test","gigi.gogi@edu.unifi.it",true );
-            Media media = mediaDAO.getMediabyfilename(photo.getFilename());
-            assertEquals(media.getFilename(), photo.getFilename());
-            assertEquals(media.getDate(), photo.getDate());
-            assertEquals(media.getTime(), photo.getTime());
-            assertEquals(media.getUploader().getEmail(), photo.getUploader().getEmail());
+            educatordao.addEducator(educator);
+            mediaDAO.uploadMedia(path, educator.getEmail(),true );
+            Media media = mediaDAO.getMediabyfilename(filename);
+            assertEquals(media.getFilename(), filename);
+            assertEquals(media.getUploader().getEmail(), educator.getEmail());
         } catch (SQLException | ClassNotFoundException| IOException | ParseException e) {
             e.printStackTrace();
         } finally {
             try {
-                educator.deleteEducator(educator1.getEmail());
-                mediaDAO.deleteMedia(photo.getFilename());
-            } catch (SQLException | ClassNotFoundException throwables) {
-                throwables.printStackTrace();
+                mediaDAO.deleteMedia(filename);
+                educatordao.deleteEducator(educator.getEmail());
+            } catch (SQLException | ClassNotFoundException e) {
+                e.printStackTrace();
             }
         }
+    }
 
+    @Test
+    public void uploadMedia(){
+        MediaDAO mediaDAO = new MediaDAO();
+        EducatorDAO educatordao = new EducatorDAO();
+        String path = "imgs/FotoBimbiTest.png";
+        String filename = "FotoBimbiTest.png";
+        String path1 = "imgs/LogoSummerCamp.png";
+        String filename1 = "LogoSummerCamp.png";
+        Educator educator = new Educator("gigi.gogi@edu.unifi.it", "Gigi", "Gogi");
+        Educator educator1 = new Educator("dino.dani@edu.unifi.it", "Dino", "Dani");
+        try{
+            educatordao.addEducator(educator);
+            educatordao.addEducator(educator1);
+            mediaDAO.uploadMedia(path, educator.getEmail(), true);
+            Media media = mediaDAO.getMediabyfilename(filename);
+            assertEquals(media.getFilename(), filename);
+            assertEquals(media.getUploader().getEmail(), educator.getEmail());
+            assertEquals(media.getClass(), Photo.class);
+            mediaDAO.uploadMedia(path1, educator1.getEmail(), false);
+            Media media1 = mediaDAO.getMediabyfilename(filename1);
+            assertEquals(media1.getFilename(), filename1);
+            assertEquals(media1.getUploader().getEmail(), educator1.getEmail());
+            assertEquals(media1.getClass(), Video.class);
+        } catch (SQLException | ClassNotFoundException | IOException | ParseException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                mediaDAO.deleteMedia(filename);
+                educatordao.deleteEducator(educator.getEmail());
+            } catch (SQLException | ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
+    @Test
+    public void deleteMedia() {
+        MediaDAO mediaDAO = new MediaDAO();
+        EducatorDAO educatordao = new EducatorDAO();
+        String path = "imgs/FotoBimbiTest.png";
+        String filename = "FotoBimbiTest.png";
+        Educator educator = new Educator("gigi.gogi@edu.unifi.it", "Gigi", "Gogi");
+        try {
+            educatordao.addEducator(educator);
+            mediaDAO.uploadMedia(path, educator.getEmail(), true);
+            Media media = mediaDAO.getMediabyfilename(filename);
+            assertEquals(media.getFilename(), filename);
+            assertEquals(media.getUploader().getEmail(), educator.getEmail());
+            mediaDAO.deleteMedia(filename);
+            media = mediaDAO.getMediabyfilename(filename);
+            assertNull(media);
+        } catch (SQLException | ClassNotFoundException | IOException | ParseException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                mediaDAO.deleteMedia(filename);
+                educatordao.deleteEducator(educator.getEmail());
+            } catch (SQLException | ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

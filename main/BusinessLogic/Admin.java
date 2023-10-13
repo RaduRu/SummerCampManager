@@ -8,10 +8,7 @@ import com.google.common.collect.Lists;
 import javax.mail.MessagingException;
 import java.sql.SQLException;
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class Admin {
     private final Notifier notifier;
@@ -68,7 +65,7 @@ public class Admin {
         notifier.sendEmailEducator(educators, "Workshift modified", "your workshift for the Summer Camp has been modified. You can check it on the website.");
     }
 
-    public ArrayList<Workshift> viewWorkshifts() throws SQLException, ClassNotFoundException {
+    public ArrayList<AbstractMap.SimpleEntry<Workshift, Educator>> viewWorkshifts() throws SQLException, ClassNotFoundException {
         WorkshiftDAO workshiftDAO = new WorkshiftDAO();
         return workshiftDAO.getAllIndividualWorkshift();
     }

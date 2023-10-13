@@ -2,9 +2,12 @@ package main.Orm;
 import java.sql.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Map;
+
 import main.DomainModel.Educator;
 import main.DomainModel.Workshift;
 
@@ -52,22 +55,24 @@ public class WorkshiftDAO {
         return workshifts;
     }
 
-    public ArrayList<Workshift> getAllIndividualWorkshift() throws SQLException, ClassNotFoundException {
+    public ArrayList<AbstractMap.SimpleEntry<Workshift, Educator>> getAllIndividualWorkshift() throws SQLException, ClassNotFoundException {
         Connection con = ConnectionManager.getConnection();
 
         String sql = "SELECT * FROM workshifts_educator";
         PreparedStatement ps = con.prepareStatement(sql);
         ResultSet rs = ps.executeQuery();
 
-        ArrayList <Workshift> workshifts = new ArrayList<Workshift>();
+        ArrayList<AbstractMap.SimpleEntry<Workshift, Educator>> workshifts = new ArrayList<>();
 
         while (rs.next()) {
             String date = rs.getDate("date").toString();
             String time = rs.getTime("time").toString();
+            String ed_email = rs.getString("email");
             Workshift workshift = new Workshift(date, time);
-            workshifts.add(workshift);
+            Educator educator = new EducatorDAO().getEducatorbyemail(ed_email);
+            AbstractMap.SimpleEntry<Workshift, Educator> entry = new AbstractMap.SimpleEntry<Workshift, Educator>(workshift, educator);
+            workshifts.add(entry);
         }
-
         ps.close();
         return workshifts;
     }
