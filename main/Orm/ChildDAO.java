@@ -41,19 +41,27 @@ public class ChildDAO {
 
     public Child getChild(String idcode) throws SQLException, ClassNotFoundException {
         Connection con = ConnectionManager.getConnection();
-        String sql = "SELECT idcode, name, surname, age, details  FROM children WHERE idcode = ?";
+        String sql = "SELECT idcode, name, surname, age, details, weeknum, idstrategy, feepaid  FROM children WHERE idcode = ?";
         PreparedStatement ps = con.prepareStatement(sql);
         ps.setString(1, idcode);
         ResultSet rs = ps.executeQuery();
-        SubscriptionDAO subscriptiondao = new SubscriptionDAO();
         if (rs.next()) {
             String name = rs.getString("name");
             String surname = rs.getString("surname");
             int age = rs.getInt("age");
             String details = rs.getString("details");
-            Subscription s = subscriptiondao.getChildInfo(idcode);
+            int weeknum = rs.getInt("weeknum");
+            boolean feepaid = rs.getBoolean("feepaid");
+            FeeStrategy feestrategy;
+            if(rs.getInt("idstrategy") == 1){
+                feestrategy = new SiblingFee();
+            }
+            else{
+                feestrategy = new OnlyChildFee();
+            }
+            Subscription subscription = new Subscription(weeknum, null, feestrategy, feepaid);
             Child child = new Child(idcode, name, surname, age, details);
-            child.setSubscription(s);
+            child.setSubscription(subscription);
             return child;
         }
         return null;
