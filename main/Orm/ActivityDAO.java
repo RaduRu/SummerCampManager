@@ -23,7 +23,7 @@ public class ActivityDAO {
             int id = rs.getInt("id");
             return id;
         }
-        return -1; // o con eccezione?
+        return -1;
     }
 
     public TypeOfActivity getTypeOfActivity(int id) throws SQLException, ClassNotFoundException {
@@ -39,7 +39,7 @@ public class ActivityDAO {
             TypeOfActivity type = TypeOfActivity.valueOf(name);
             return type;
         }
-        return null; // o con eccezione?
+        return null;
     }
 
     public ArrayList<Activity> getAllActivities() throws SQLException, ClassNotFoundException {

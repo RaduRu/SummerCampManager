@@ -45,12 +45,15 @@ public class ChildDAO {
         PreparedStatement ps = con.prepareStatement(sql);
         ps.setString(1, idcode);
         ResultSet rs = ps.executeQuery();
+        SubscriptionDAO subscriptiondao = new SubscriptionDAO();
         if (rs.next()) {
             String name = rs.getString("name");
             String surname = rs.getString("surname");
             int age = rs.getInt("age");
             String details = rs.getString("details");
+            Subscription s = subscriptiondao.getChildInfo(idcode);
             Child child = new Child(idcode, name, surname, age, details);
+            child.setSubscription(s);
             return child;
         }
         return null;
