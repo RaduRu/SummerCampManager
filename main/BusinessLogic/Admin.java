@@ -25,17 +25,12 @@ public class Admin {
         activityDAO.insert(activity);
 
         ParentDAO parentDAO = new ParentDAO();
-        ArrayList<Parent> parents = new ArrayList<>();
-        parents = parentDAO.getAllParents();
 
-        notifier.sendEmailParent(parents, "New activity", "a new activity has been created. You can check it on the website.");
+        notifier.sendEmailParent(parentDAO.getAllParents() , "New activity", "a new activity has been created. You can check it on the website.");
 
         EducatorDAO educatorDAO = new EducatorDAO();
-        ArrayList<Educator> educators = new ArrayList<>();
-        educators = educatorDAO.getAllEducators();
 
-        notifier.sendEmailEducator(educators, "New activity", "a new activity has been created. You can check it on the website.");
-
+        notifier.sendEmailEducator(educatorDAO.getAllEducators(), "New activity", "a new activity has been created. You can check it on the website.");
     }
 
     public void createWorkshifts() throws SQLException, ParseException, MessagingException, ClassNotFoundException {
@@ -88,12 +83,10 @@ public class Admin {
         activityDAO.delete(activity);
 
         ParentDAO parentDAO = new ParentDAO();
-        ArrayList<Parent> parents = parentDAO.getAllParents();
-        notifier.sendEmailParent(parents, "Activity deleted", "an activity has been deleted. You can check it on the website.");
+        notifier.sendEmailParent(parentDAO.getAllParents(), "Activity deleted", "an activity has been deleted. You can check it on the website.");
 
         EducatorDAO educatorDAO = new EducatorDAO();
-        ArrayList<Educator> educators = educatorDAO.getAllEducators();
-        notifier.sendEmailEducator(educators, "Activity deleted", "an activity has been deleted. You can check it on the website.");
+        notifier.sendEmailEducator(educatorDAO.getAllEducators(), "Activity deleted", "an activity has been deleted. You can check it on the website.");
     }
 
     public void modifyActivity(Activity activity) throws SQLException, ParseException, MessagingException, ClassNotFoundException {
@@ -101,12 +94,10 @@ public class Admin {
         activityDAO.modify(activity);
 
         ParentDAO parentDAO = new ParentDAO();
-        ArrayList<Parent> parents = parentDAO.getAllParents();
-        notifier.sendEmailParent(parents, "Activity modified", "an activity has been modified. You can check it on the website.");
+        notifier.sendEmailParent(parentDAO.getAllParents(), "Activity modified", "an activity has been modified. You can check it on the website.");
 
         EducatorDAO educatorDAO = new EducatorDAO();
-        ArrayList<Educator> educators = educatorDAO.getAllEducators();
-        notifier.sendEmailEducator(educators, "Activity modified", "an activity has been modified. You can check it on the website.");
+        notifier.sendEmailEducator(educatorDAO.getAllEducators(), "Activity modified", "an activity has been modified. You can check it on the website.");
 
     }
 
@@ -117,8 +108,7 @@ public class Admin {
 
     public void paymentReminder() throws SQLException, MessagingException, ClassNotFoundException {
         SubscriptionDAO subscriptionDAO = new SubscriptionDAO();
-        ArrayList<Parent> parents = new ArrayList<>();
-        parents = subscriptionDAO.getParentsNotPaid();
+        ArrayList<Parent> parents = subscriptionDAO.getParentsNotPaid();
 
         ChildDAO childDAO = new ChildDAO();
         for (Parent parent : parents) {
