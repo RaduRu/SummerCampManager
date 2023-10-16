@@ -95,6 +95,23 @@ public class WorkshiftDAO {
         ps.close();
     }
 
+    public void delete(Workshift workshift, Educator educator) throws SQLException, ClassNotFoundException, ParseException {
+        Connection con = ConnectionManager.getConnection();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+
+        String sql = "DELETE FROM workshifts_educator WHERE email = ? AND date = ? AND time = ? ";
+        PreparedStatement ps = con.prepareStatement(sql);
+        java.util.Date utilDate = format.parse(workshift.getDate());
+        java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+        LocalTime localTime = LocalTime.parse(workshift.getTime(), DateTimeFormatter.ofPattern("HH:mm:ss"));
+        ps.setString(1, educator.getEmail());
+        ps.setDate(2, sqlDate);
+        ps.setTime(3, java.sql.Time.valueOf(localTime));
+        ps.executeUpdate();
+
+        ps.close();
+    }
+
     public void modify (Educator educator, Workshift newworkshift, Workshift oldworkshift) throws SQLException, ParseException, ClassNotFoundException {
         Connection con = ConnectionManager.getConnection();
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
@@ -134,7 +151,32 @@ public class WorkshiftDAO {
         return dates;
     }
 
+    public void addWorkshift(Workshift workshift) throws SQLException, ClassNotFoundException, ParseException {
+        Connection con = ConnectionManager.getConnection();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 
+        String sql = "INSERT INTO workshifts (date, time) VALUES (?, ?)";
+        PreparedStatement ps = con.prepareStatement(sql);
+        java.util.Date utilDate = format.parse(workshift.getDate());
+        java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+        LocalTime localTime = LocalTime.parse(workshift.getTime(), DateTimeFormatter.ofPattern("HH:mm:ss"));
+        ps.setDate(1, sqlDate);
+        ps.setTime(2, java.sql.Time.valueOf(localTime));
+        ps.executeUpdate();
+        ps.close();
+    }
 
-
+    public void deleteWorkshift(Workshift workshift) throws SQLException, ClassNotFoundException, ParseException {
+        Connection con = ConnectionManager.getConnection();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        String sql = "DELETE FROM workshifts WHERE date = ? AND time = ?";
+        PreparedStatement ps = con.prepareStatement(sql);
+        java.util.Date utilDate = format.parse(workshift.getDate());
+        java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+        LocalTime localTime = LocalTime.parse(workshift.getTime(), DateTimeFormatter.ofPattern("HH:mm:ss"));
+        ps.setDate(1, sqlDate);
+        ps.setTime(2, java.sql.Time.valueOf(localTime));
+        ps.executeUpdate();
+        ps.close();
+    }
 }

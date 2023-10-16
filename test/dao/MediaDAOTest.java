@@ -90,6 +90,8 @@ public class MediaDAOTest {
             try {
                 mediaDAO.deleteMedia(filename);
                 educatordao.deleteEducator(educator.getEmail());
+                mediaDAO.deleteMedia(filename1);
+                educatordao.deleteEducator(educator1.getEmail());
             } catch (SQLException | ClassNotFoundException e) {
                 e.printStackTrace();
             }
