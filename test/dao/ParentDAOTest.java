@@ -75,7 +75,7 @@ public class ParentDAOTest {
         }finally {
             try {
                 parentDAO.deleteParent("abc222");
-                parentDAO.deleteParent("dse213");
+                parentDAO.deleteParent("abc333");
             } catch (SQLException | ClassNotFoundException e) {
                 e.printStackTrace();
             }

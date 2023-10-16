@@ -113,25 +113,8 @@ public class WorkshiftDAO {
     }
 
     public void modify (Educator educator, Workshift newworkshift, Workshift oldworkshift) throws SQLException, ParseException, ClassNotFoundException {
-        Connection con = ConnectionManager.getConnection();
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-
-        String sql = "UPDATE workshifts_educator SET date = ?, time = ? WHERE email = ? AND date = ? AND time = ?";
-        PreparedStatement ps = con.prepareStatement(sql);
-        java.util.Date utilDate = format.parse(newworkshift.getDate());
-        java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
-        LocalTime localTime = LocalTime.parse(newworkshift.getTime(), DateTimeFormatter.ofPattern("HH:mm:ss"));
-        java.util.Date oldutilDate= format.parse(oldworkshift.getDate());
-        java.sql.Date oldsqlDate = new java.sql.Date(oldutilDate.getTime());
-        LocalTime oldlocalTime = LocalTime.parse(oldworkshift.getTime(), DateTimeFormatter.ofPattern("HH:mm:ss"));
-        ps.setDate(1, sqlDate);
-        ps.setTime(2, java.sql.Time.valueOf(localTime));
-        ps.setString(3, educator.getEmail());
-        ps.setDate(4, oldsqlDate);
-        ps.setTime(5, java.sql.Time.valueOf(oldlocalTime));
-        ps.executeUpdate();
-
-        ps.close();
+        delete(oldworkshift, educator);
+        insert(educator, newworkshift);
     }
 
     public ArrayList<String> getDates() throws SQLException, ClassNotFoundException {
