@@ -108,12 +108,6 @@ public class AdminTest {
         }
     }
 
-    //CREATE_WORKSHIFTS: probabilmente test empirico guardando tabella da postgres
-    //VIEW_WORKSHIFTS: probabilmente test empirico guardando tabella da postgres
-    //MODIFY_WORKSHIFTS: probabilmente test empirico guardando tabella da postgres
-    //nella relazione specificare che i test sono stati fatti empiricamente perché avremmo potuto testare solo esistenza e non contenuto
-    //Anche PAYMENT_REMINDER è test empirico
-
     @Test
     public void viewChildrenList(){
         Child child = new Child("ABC123", "Marina", "Carovani", 8, "test");
